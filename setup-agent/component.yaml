@@ -1,0 +1,14 @@
+schemaVersion: 2
+id: core/setup-agent
+name: Dashboard setup agent
+description: Runs the configured CLI agent to customize this starter dashboard.
+entry: ./index.tsx
+actions:
+  - id: setup
+    label: Set up dashboard with agent
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties: {}
+permissions:
+  - process:execute

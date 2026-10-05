@@ -1,0 +1,108 @@
+schemaVersion: 2
+id: core/chart
+name: Chart
+description: "Plots line or bar data from YAML or a bounded source emitting {
+  labels: string[], series: [{ label, values }] }."
+entry: ./index.tsx
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    title:
+      type: string
+    type:
+      enum:
+        - line
+        - bar
+    maxPoints:
+      type: integer
+      minimum: 2
+      maximum: 200
+    source:
+      type: object
+      additionalProperties: false
+      properties:
+        shell: &a1
+          type: string
+          minLength: 1
+        file: *a1
+        http:
+          type: string
+          pattern: ^https?://
+        process: *a1
+        inline: {}
+        every:
+          type: integer
+          minimum: 1000
+          maximum: 300000
+        timeoutMs:
+          type: integer
+          minimum: 1
+          maximum: 30000
+        cwd:
+          type: string
+          minLength: 1
+        env:
+          type: object
+          additionalProperties:
+            type: string
+      oneOf:
+        - required:
+            - shell
+        - required:
+            - file
+        - required:
+            - http
+        - required:
+            - process
+        - required:
+            - inline
+    labels:
+      type: array
+      minItems: 1
+      maxItems: 500
+      items:
+        type: string
+    series:
+      type: array
+      minItems: 1
+      maxItems: 12
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          label: *a1
+          values:
+            type: array
+            minItems: 1
+            maxItems: 500
+            items:
+              type:
+                - number
+                - "null"
+          color: *a1
+        required:
+          - label
+          - values
+  oneOf:
+    - required:
+        - source
+    - required:
+        - labels
+        - series
+permissionsByProp:
+  source.shell:
+    - process:execute
+  source.file:
+    - filesystem:read
+  source.http:
+    - network:http
+  source.process:
+    - process:observe
+actions:
+  - id: refresh
+    label: Refresh chart
+    description: Reload the configured chart source.
+references:
+  source.process:
+    resource: process

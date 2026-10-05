@@ -1,0 +1,17 @@
+/* src/renderer/builtins/setup-agent/setup-agent.css */
+.setup-agent {
+  display: grid;
+  overflow-wrap: anywhere;
+  justify-items: start;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+}
+
+.setup-agent small {
+  color: var(--muted);
+}
+
+.setup-agent [role="alert"] {
+  color: var(--negative);
+}

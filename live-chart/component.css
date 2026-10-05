@@ -1,0 +1,168 @@
+/* src/renderer/builtins/chart/chart.css */
+.chart {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  min-width: 0;
+}
+
+.chart__header {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  justify-content: space-between;
+  align-items:  center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 8px 11px;
+}
+
+.chart__heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.chart__heading strong {
+  color: var(--text);
+  font-size: var(--font-size-sm);
+}
+
+.chart__heading span, .chart__footer {
+  color: var(--muted);
+  font-size: var(--font-size-2xs);
+}
+
+.chart__svg {
+  display: block;
+  width: 100%;
+  height: clamp(210px, 24vw, 260px);
+  padding: 9px 10px 0;
+}
+
+.chart__grid {
+  stroke: color-mix(in srgb, var(--muted) 18%, transparent);
+  stroke-dasharray: 3 6;
+  stroke-width: 1;
+}
+
+.chart__axis {
+  stroke: var(--border-bright);
+  stroke-width: 1;
+}
+
+.chart__axis-label, .chart__x-label {
+  fill: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.chart__x-label {
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.chart__line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart__point {
+  stroke: var(--surface);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart__bar {
+  opacity: .9;
+}
+
+.chart__footer {
+  display: flex;
+  border-top: 1px solid var(--border);
+  justify-content: space-between;
+  align-items:  center;
+  gap: 10px;
+  min-height: 36px;
+  padding: 7px 11px;
+}
+
+.chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  min-width: 0;
+}
+
+.chart__legend-item {
+  display: inline-flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  align-items:  center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.chart__legend-item i {
+  border-radius: 50%;
+  flex: none;
+  width: 7px;
+  height: 7px;
+}
+
+.chart__error {
+  border: 1px solid color-mix(in srgb, var(--negative) 24%, transparent);
+  border-radius: var(--radius-sm);
+  color: var(--negative);
+  background: color-mix(in srgb, var(--negative) 18%, transparent);
+  margin: 10px 11px 0;
+  padding: 8px 9px;
+  font-size: 11px;
+}
+
+.chart__point, .chart__bar {
+  transition: opacity .15s;
+}
+
+.chart__point:hover, .chart__bar:hover {
+  opacity: .65;
+}
+
+.chart__refresh {
+  display: inline-flex;
+  align-items:  center;
+  gap: 5px;
+}
+
+.chart__refresh svg {
+  flex: 0 0 13px;
+  width: 13px;
+  height: 13px;
+}
+
+.chart[data-refreshing] > .chart__header {
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.chart[data-refreshing] .chart__heading span {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .chart[data-refreshing] .chart__refresh svg {
+    animation: chart-refresh-turn .9s linear infinite;
+  }
+}
+
+@keyframes chart-refresh-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}

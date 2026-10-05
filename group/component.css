@@ -1,0 +1,32 @@
+/* src/renderer/builtins/card/card.css */
+.card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-panel);
+  min-width: 0;
+}
+
+.card__header {
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-raised) 45%, var(--surface));
+  padding: 15px 17px 13px;
+}
+
+.card__header h2 {
+  font-size: var(--font-size-lg);
+  letter-spacing: -.02em;
+  margin: 0;
+}
+
+.card__header p {
+  color: var(--muted);
+  font-size: var(--font-size-xs);
+  margin: 5px 0 0;
+  line-height: 1.45;
+}
+
+.card__body {
+  padding: 17px;
+}

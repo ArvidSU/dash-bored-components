@@ -1,0 +1,27 @@
+schemaVersion: 2
+id: core/selection
+name: Selection container
+description: Shows one managed child at a time using core-owned selection
+  actions and persisted state.
+entry: ./index.tsx
+renderMode: layout
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    defaultChild: &a1
+      type: string
+      minLength: 1
+    label: *a1
+children:
+  min: 1
+  presentation:
+    type: managed
+  metadataSchema:
+    type: object
+    additionalProperties: false
+    properties:
+      label: *a1
+    required:
+      - label
+  select: single

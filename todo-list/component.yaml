@@ -1,0 +1,84 @@
+schemaVersion: 2
+id: core/todo-list
+name: YAML todo list
+description: Keeps a small todo list in this component's dashboard YAML props.
+entry: ./index.tsx
+actions:
+  - id: toggle
+    label: Toggle todo completion
+    args:
+      type: object
+      additionalProperties: false
+      properties:
+        id: &a1
+          type: string
+          minLength: 1
+  - id: remove
+    label: Remove todo
+    args:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *a1
+  - id: filter
+    label: Filter list by tag
+    args:
+      type: object
+      additionalProperties: false
+      properties:
+        tag: *a1
+  - id: clear-filter
+    label: Clear list tag filter
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    todos:
+      type: array
+      maxItems: 500
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          id: *a1
+          description: *a1
+          done:
+            type: boolean
+          tags:
+            type: array
+            maxItems: 32
+            items: *a1
+        required:
+          - description
+          - done
+          - tags
+    itemActions:
+      type: array
+      maxItems: 12
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          name: *a1
+          action:
+            oneOf:
+              - type: string
+                minLength: 1
+                format: action-reference
+              - type: object
+                additionalProperties: false
+                properties:
+                  run:
+                    type: string
+                    minLength: 1
+                    format: action-reference
+                  with:
+                    type: object
+                required:
+                  - run
+        required:
+          - name
+          - action
+references:
+  itemActions.*.action:
+    resource: action

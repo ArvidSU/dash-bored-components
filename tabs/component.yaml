@@ -1,0 +1,34 @@
+schemaVersion: 2
+id: core/tabs
+name: Tabs
+description: Switches between labeled dashboard panels.
+entry: ./index.tsx
+actions:
+  - id: select
+    label: Select tab
+    args:
+      type: object
+      additionalProperties: false
+      properties:
+        child: &a1
+          type: string
+          minLength: 1
+renderMode: layout
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    defaultTab:
+      type: integer
+      minimum: 0
+children:
+  min: 1
+  presentation:
+    type: managed
+  metadataSchema:
+    type: object
+    additionalProperties: false
+    properties:
+      label: *a1
+    required:
+      - label

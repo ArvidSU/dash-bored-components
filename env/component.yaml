@@ -1,0 +1,26 @@
+schemaVersion: 2
+id: core/env
+name: Environment editor
+description: Edits a project-local .env file as key-value pairs or raw text.
+entry: ./index.tsx
+actions:
+  - id: refresh
+    label: Reload environment file
+  - id: save
+    label: Save environment file
+  - id: raw
+    label: Show raw environment
+  - id: table
+    label: Show environment variables
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    path:
+      type: string
+      minLength: 1
+  required:
+    - path
+permissions:
+  - filesystem:read
+  - filesystem:write

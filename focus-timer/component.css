@@ -1,0 +1,141 @@
+/* src/renderer/builtins/focus-timer/focus-timer.css */
+.focus-timer {
+  --timer-color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  background: radial-gradient(ellipse at 50% 45%, color-mix(in srgb, var(--timer-color) 9%, transparent), transparent 65%);
+  text-align: center;
+  padding: clamp(18px, 4vw, 36px);
+}
+
+.focus-timer[data-phase="break"] {
+  --timer-color: var(--positive);
+}
+
+.focus-timer__eyebrow {
+  display: flex;
+  color: var(--muted);
+  font: 10px var(--font-mono);
+  letter-spacing: .12em;
+  text-align: left;
+  align-items:  center;
+  gap: 8px;
+  padding-right: 24px;
+}
+
+.focus-timer__eyebrow > span:last-child {
+  margin-left: auto;
+}
+
+.focus-timer__dot {
+  background: var(--timer-color);
+  border-radius: 50%;
+  width: 7px;
+  height: 7px;
+}
+
+.focus-timer h2 {
+  overflow-wrap: anywhere;
+  margin: 24px 0 12px;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 550;
+}
+
+.focus-timer__dial {
+  position: relative;
+  aspect-ratio: 1;
+  width: min(100%, 250px);
+  margin: 0 auto;
+}
+
+.focus-timer__dial svg {
+  fill: none;
+  stroke-width: 3;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.focus-timer__track {
+  stroke: var(--border);
+}
+
+.focus-timer__progress {
+  stroke: var(--timer-color);
+  stroke-linecap: round;
+}
+
+.focus-timer__dial > div {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  inset: 0;
+}
+
+.focus-timer__time {
+  font: 48px var(--font-mono);
+  letter-spacing: -.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.focus-timer__phase {
+  color: var(--muted);
+  font: 9px var(--font-mono);
+  letter-spacing: .18em;
+}
+
+.focus-timer__message {
+  color: var(--muted);
+  min-height: 2.8em;
+  margin: 8px 0 16px;
+  font-size: 12px;
+}
+
+.focus-timer__controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.focus-timer__controls button {
+  border: 1px solid var(--timer-color);
+  border-radius: var(--radius-sm);
+  background: var(--timer-color);
+  color: var(--bg);
+  font: inherit;
+  cursor: pointer;
+  padding: 10px 24px;
+  font-size: 12px;
+}
+
+.focus-timer__controls .focus-timer__reset {
+  border-color: var(--border);
+  color: var(--text);
+  background: none;
+}
+
+.focus-timer__controls button:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.focus-timer__controls button:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+}
+
+.focus-timer footer {
+  display: flex;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+  margin-top: 28px;
+  padding-top: 14px;
+  font-size: 10px;
+}

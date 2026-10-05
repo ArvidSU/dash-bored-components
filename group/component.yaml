@@ -1,0 +1,19 @@
+schemaVersion: 2
+id: core/group
+name: Group
+description: Provides a tiled composition boundary with optional title and description.
+entry: ./index.tsx
+renderMode: layout
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    title:
+      type: string
+    description:
+      type: string
+children:
+  min: 0
+  presentation:
+    type: tiled
+    axes: both

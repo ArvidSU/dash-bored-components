@@ -1,0 +1,46 @@
+schemaVersion: 2
+id: core/command
+name: Command
+description: Runs a remembered quick action in a persistent interactive terminal.
+entry: ./index.tsx
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    label:
+      type: string
+      minLength: 1
+    command:
+      type: string
+      minLength: 1
+      not:
+        pattern: \$\{item\.
+    cwd:
+      type: string
+      minLength: 1
+    env:
+      type: object
+      additionalProperties:
+        type: string
+  required:
+    - label
+    - command
+resources:
+  process:
+    commandProp: command
+    interactive: true
+    cwdProp: cwd
+    envProp: env
+actions:
+  - id: run
+    label: Run command with item values
+    description: Runs this command as a bounded action with DASH_ITEM_* environment values.
+    args:
+      type: object
+      additionalProperties:
+        type:
+          - string
+          - number
+          - boolean
+permissions:
+  - process:execute

@@ -1,0 +1,68 @@
+schemaVersion: 2
+id: core/button
+name: Action button
+description: Invokes one action or a compact bar of actions, with availability
+  and invocation feedback.
+entry: ./index.tsx
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    name: &a1
+      type: string
+      minLength: 1
+    action: &a2
+      oneOf:
+        - type: string
+          minLength: 1
+          format: action-reference
+        - type: object
+          additionalProperties: false
+          properties:
+            run:
+              type: string
+              minLength: 1
+              format: action-reference
+            with:
+              type: object
+          required:
+            - run
+    label: *a1
+    variant:
+      enum:
+        - buttons
+        - segmented
+        - tabs
+    items:
+      type: array
+      minItems: 1
+      maxItems: 12
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          name: *a1
+          action: *a2
+        required:
+          - name
+          - action
+  anyOf:
+    - required:
+        - name
+        - action
+      not:
+        required:
+          - items
+    - required:
+        - items
+      not:
+        anyOf:
+          - required:
+              - name
+          - required:
+              - action
+references:
+  action:
+    resource: action
+  items.*.action:
+    resource: action

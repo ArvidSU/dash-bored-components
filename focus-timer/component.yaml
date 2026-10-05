@@ -1,0 +1,32 @@
+schemaVersion: 2
+id: core/focus-timer
+name: Focus timer
+description: A focused work session and a breathing break, with pause, resume,
+  and explicit session starts. Session state resets on unmount or duration
+  changes.
+entry: ./index.tsx
+actions:
+  - id: start
+    label: Start or resume timer
+  - id: pause
+    label: Pause timer
+  - id: reset
+    label: Reset timer
+  - id: next
+    label: Start next timer session
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    title:
+      type: string
+    focusMinutes:
+      type: integer
+      minimum: 1
+      maximum: 180
+      default: 25
+    breakMinutes:
+      type: integer
+      minimum: 1
+      maximum: 60
+      default: 5

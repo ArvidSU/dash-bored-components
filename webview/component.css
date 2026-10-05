@@ -1,0 +1,42 @@
+/* src/renderer/builtins/webview/webview.css */
+.webview-shell__header {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  align-items:  center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 7px 10px;
+}
+
+.webview-shell {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  min-width: 0;
+}
+
+.webview-shell__url {
+  overflow: hidden;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+  font-size: 9px;
+}
+
+.webview-shell__placeholder, .webview-shell__view {
+  display: block;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  min-height: 320px;
+  max-height: 720px;
+}
+
+.webview-shell__view {
+  background: var(--accent-ink);
+  min-width: 0;
+}

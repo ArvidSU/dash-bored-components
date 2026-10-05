@@ -1,0 +1,19 @@
+schemaVersion: 2
+id: core/webview
+name: Webview
+description: Embeds an HTTP or HTTPS application page.
+entry: ./index.tsx
+actions:
+  - id: reload
+    label: Reload embedded page
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    url:
+      type: string
+      pattern: ^https?://
+  required:
+    - url
+permissions:
+  - webview:embed

@@ -1,0 +1,45 @@
+schemaVersion: 2
+id: core/conditional
+name: Conditional visibility
+description: Recovery visibility for one tiled child based on a bounded shell
+  check. Starts visible and fails open before trust or on host errors;
+  unsuitable for asserting healthy status.
+entry: ./index.tsx
+actions:
+  - id: refresh
+    label: Recheck condition
+renderMode: layout
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    command:
+      type: string
+      minLength: 1
+    cwd:
+      type: string
+      minLength: 1
+    env:
+      type: object
+      additionalProperties:
+        type: string
+    invert:
+      type: boolean
+    pollIntervalMs:
+      type: integer
+      minimum: 1000
+      maximum: 300000
+    timeoutMs:
+      type: integer
+      minimum: 1
+      maximum: 30000
+  required:
+    - command
+children:
+  min: 1
+  max: 1
+  presentation:
+    type: tiled
+    axes: both
+permissions:
+  - process:execute

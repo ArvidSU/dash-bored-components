@@ -1,0 +1,36 @@
+schemaVersion: 2
+id: core/live-chart
+name: Live chart
+description: Polls a JSON endpoint and plots its chart-shaped response.
+entry: ./index.tsx
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    title:
+      type: string
+    type:
+      enum:
+        - line
+        - bar
+    maxPoints:
+      type: integer
+      minimum: 2
+      maximum: 200
+    endpoint:
+      type: string
+      pattern: ^(https?://|/|\./)
+    dataPath:
+      type: string
+    pollIntervalMs:
+      type: integer
+      minimum: 1000
+      maximum: 300000
+  required:
+    - endpoint
+permissions:
+  - network:http
+actions:
+  - id: refresh
+    label: Refresh chart
+    description: Reload the live chart endpoint.

@@ -1,0 +1,18 @@
+schemaVersion: 2
+id: core/card
+name: Card
+description: Frames dashboard content with an optional title.
+entry: ./index.tsx
+propsSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    title:
+      type: string
+    description:
+      type: string
+children:
+  min: 2
+  presentation:
+    type: tiled
+    axes: both
