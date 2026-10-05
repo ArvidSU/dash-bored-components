@@ -49,7 +49,7 @@ export type ComponentChildren<Node = ComponentNode> =
   | ComponentChildEdge<Node>[];
 
 export interface DashboardConfig {
-  schemaVersion: 3;
+  schemaVersion: 4;
   name: string;
   /** Optional image path or HTTP(S) URL shown for this dashboard in the sidebar. */
   icon?: string;
