@@ -5,3 +5,5 @@
   .card, .source-list, .todo, .chart, .status { animation: core-surface-arrive 180ms ease-out; }
 }
 @keyframes core-surface-arrive { from { opacity: 0.55; } to { opacity: 1; } }
+
+.status, .command, .card { box-shadow: var(--shadow-panel); }

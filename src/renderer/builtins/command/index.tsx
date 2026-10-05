@@ -1,3 +1,4 @@
+import "../../lib/component-common.css";
 import { TerminalSurface } from "@dash-bored/component";
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";

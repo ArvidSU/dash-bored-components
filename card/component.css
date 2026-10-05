@@ -19,6 +19,10 @@
   }
 }
 
+.status, .command, .card {
+  box-shadow: var(--shadow-panel);
+}
+
 /* src/renderer/builtins/card/card.css */
 .card {
   overflow: hidden;
