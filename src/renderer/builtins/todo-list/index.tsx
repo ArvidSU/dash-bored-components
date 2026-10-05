@@ -378,3 +378,5 @@ export function TodoList({ props, host, refreshAction = false }: TodoListProps):
   );
   }}</TagFilter>;
 }
+
+export default TodoList;

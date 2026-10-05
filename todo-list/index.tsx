@@ -612,6 +612,8 @@ function TodoList({ props, host, refreshAction = false }) {
     }
   }, "editable-todos", false, undefined, this);
 }
+var todo_list_default = TodoList;
 export {
+  todo_list_default as default,
   TodoList
 };
