@@ -1,0 +1,7 @@
+/* Shared feedback belongs to component outputs, not the application shell. */
+.source-list[data-refreshing] > header,
+.markdown-viewer[data-refreshing] > header { box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+@media (prefers-reduced-motion: no-preference) {
+  .card, .source-list, .todo, .chart, .status { animation: core-surface-arrive 180ms ease-out; }
+}
+@keyframes core-surface-arrive { from { opacity: 0.55; } to { opacity: 1; } }

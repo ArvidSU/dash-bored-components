@@ -1,3 +1,4 @@
+import "../../lib/component-common.css";
 import { useMemo } from "react";
 import type { ReactNode } from "react";
 import "./list.css";

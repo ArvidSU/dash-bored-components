@@ -1,3 +1,4 @@
+import "../../lib/component-common.css";
 import type { ReactNode } from "react";
 import "./status.css";
 import type { ComponentRendererProps } from "../types";

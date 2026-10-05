@@ -1,3 +1,24 @@
+/* src/renderer/lib/component-common.css */
+.source-list[data-refreshing] > header, .markdown-viewer[data-refreshing] > header {
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card, .source-list, .todo, .chart, .status {
+    animation: core-surface-arrive .18s ease-out;
+  }
+}
+
+@keyframes core-surface-arrive {
+  from {
+    opacity: .55;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 /* src/renderer/builtins/chart/chart.css */
 .chart {
   overflow: hidden;

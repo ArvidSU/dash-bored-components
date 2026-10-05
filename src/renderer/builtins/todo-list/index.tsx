@@ -1,3 +1,4 @@
+import "../../lib/component-common.css";
 import {
   useCallback,
   useEffect,
