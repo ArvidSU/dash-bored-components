@@ -1,8 +1,10 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/setup-agent
 name: Dashboard setup agent
 description: Runs the configured CLI agent to customize this starter dashboard.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 actions:
   - id: setup
     label: Set up dashboard with agent

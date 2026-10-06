@@ -1,8 +1,10 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/env
 name: Environment editor
 description: Edits a project-local .env file as key-value pairs or raw text.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 actions:
   - id: refresh
     label: Reload environment file

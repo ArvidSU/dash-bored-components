@@ -1,4 +1,4 @@
-import type { ProcessSnapshot } from "../../shared/contracts";
+import type { ProcessSnapshot } from "@dash-bored/component";
 import { processRun, processRunFailed } from "../../shared/process-state";
 import { parseChartData, type ChartData } from "./chart-data";
 

@@ -1,8 +1,10 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/webview
 name: Webview
 description: Embeds an HTTP or HTTPS application page.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 actions:
   - id: reload
     label: Reload embedded page

@@ -1,4 +1,4 @@
-import type { ProcessRunSnapshot, ProcessSnapshot } from "./contracts";
+import type { ProcessRunSnapshot, ProcessSnapshot } from "@dash-bored/component";
 
 /**
  * Latest run of a process resource's command. Snapshots from older producers

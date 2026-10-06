@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import type { ShellRunResult } from "../../../shared/contracts";
+import type { ShellRunResult } from "@dash-bored/component";
 import { useComponentVisibility } from "@dash-bored/component";
 import type { ComponentRendererProps } from "../types";
 import { childSurface, stringProp } from "../shared";

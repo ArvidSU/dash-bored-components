@@ -1,9 +1,11 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/button
 name: Action button
 description: Invokes one action or a compact bar of actions, with availability
   and invocation feedback.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 propsSchema:
   type: object
   additionalProperties: false

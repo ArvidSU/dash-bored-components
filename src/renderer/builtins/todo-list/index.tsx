@@ -8,7 +8,7 @@ import {
 } from "react";
 import type { ReactNode } from "react";
 import "./todo-list.css";
-import type { LocalComponentHost } from "../../../shared/contracts";
+import type { LocalComponentHost } from "@dash-bored/component";
 import { migrateTodoItems } from "../../../migrations/todo-ids";
 import { createTodoId, type TodoItem } from "../../../shared/todo";
 import {

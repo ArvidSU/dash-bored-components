@@ -1,9 +1,11 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/chart
 name: Chart
 description: "Plots line or bar data from YAML or a bounded source emitting {
   labels: string[], series: [{ label, values }] }."
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 propsSchema:
   type: object
   additionalProperties: false

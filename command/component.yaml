@@ -1,8 +1,10 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/command
 name: Command
 description: Runs a remembered quick action in a persistent interactive terminal.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 propsSchema:
   type: object
   additionalProperties: false

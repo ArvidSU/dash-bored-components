@@ -1,8 +1,10 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/tabs
 name: Tabs
 description: Switches between labeled dashboard panels.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 actions:
   - id: select
     label: Select tab

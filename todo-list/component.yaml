@@ -1,8 +1,10 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/todo-list
 name: YAML todo list
 description: Keeps a small todo list in this component's dashboard YAML props.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 actions:
   - id: toggle
     label: Toggle todo completion

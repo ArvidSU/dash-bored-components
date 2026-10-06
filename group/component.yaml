@@ -1,8 +1,10 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/group
 name: Group
 description: Provides a tiled composition boundary with optional title and description.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 renderMode: layout
 propsSchema:
   type: object

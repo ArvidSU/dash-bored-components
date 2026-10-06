@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import type { ComponentActionConfirmation, LocalComponentHost } from "../../shared/contracts";
+import type { ComponentActionConfirmation, LocalComponentHost } from "@dash-bored/component";
 import { useComponentVisibility } from "@dash-bored/component";
 import { readDashboardSource, type DashboardSource } from "./source";
 

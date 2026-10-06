@@ -1,9 +1,11 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/markdown
 name: Markdown
 description: Previews safe Markdown from inline content or a project file, with
   raw editing and bounded source polling.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 propsSchema:
   type: object
   additionalProperties: false

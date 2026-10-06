@@ -1,10 +1,12 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/conditional
 name: Conditional visibility
 description: Recovery visibility for one tiled child based on a bounded shell
   check. Starts visible and fails open before trust or on host errors;
   unsuitable for asserting healthy status.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 actions:
   - id: refresh
     label: Recheck condition

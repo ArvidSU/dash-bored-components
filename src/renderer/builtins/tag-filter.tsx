@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import type { LocalComponentHost } from "../../shared/contracts";
+import type { LocalComponentHost } from "@dash-bored/component";
 
 interface TagFilterProps {
   host: LocalComponentHost;

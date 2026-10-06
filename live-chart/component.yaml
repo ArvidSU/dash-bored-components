@@ -1,8 +1,10 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/live-chart
 name: Live chart
 description: Polls a JSON endpoint and plots its chart-shaped response.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 propsSchema:
   type: object
   additionalProperties: false

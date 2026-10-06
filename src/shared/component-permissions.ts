@@ -1,4 +1,4 @@
-import type { ComponentManifest, Permission } from "./contracts";
+import type { ComponentManifest, Permission } from "@dash-bored/component";
 
 /** Resolve static and prop-activated permissions from the same manifest contract. */
 export function permissionsForComponent(

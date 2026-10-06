@@ -1,4 +1,4 @@
-import type { ActionInvocation } from "./contracts";
+import type { ActionInvocation } from "@dash-bored/component";
 
 export function actionInvocation(value: unknown): { run: string; with: Record<string, unknown> } | undefined {
   if (typeof value === "string") return { run: value, with: {} };

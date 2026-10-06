@@ -1,10 +1,12 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/focus-timer
 name: Focus timer
 description: A focused work session and a breathing break, with pause, resume,
   and explicit session starts. Session state resets on unmount or duration
   changes.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 actions:
   - id: start
     label: Start or resume timer

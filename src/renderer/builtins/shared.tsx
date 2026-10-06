@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { ComponentRenderedChildren } from "../../shared/contracts";
+import type { ComponentRenderedChildren } from "@dash-bored/component";
 
 export function childSurface(children: ComponentRenderedChildren | undefined): ReactNode {
   return children?.type === "tiled" ? children.surface : null;

@@ -1,9 +1,11 @@
-schemaVersion: 2
+schemaVersion: 3
+apiVersion: "1.0.0"
 id: core/selection
 name: Selection container
 description: Shows one managed child at a time using core-owned selection
   actions and persisted state.
-entry: ./index.tsx
+entry: ./index.js
+types: ./index.d.ts
 renderMode: layout
 propsSchema:
   type: object

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import type { ComponentManifest, LocalComponentHost } from "../../src/shared/contracts";
+import type { ComponentManifest, LocalComponentHost } from "@dash-bored/component";
 import { decodeSourceText, readDashboardSource } from "../../src/renderer/lib/source";
 import { permissionsForComponent } from "../../src/shared/component-permissions";
 

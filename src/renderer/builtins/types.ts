@@ -1,13 +1,6 @@
 import type { ReactNode } from "react";
-import type {
-  ComponentRenderedChildren,
-  LocalComponentHost,
-} from "../../shared/contracts";
+import type { LocalComponentRenderProps } from "@dash-bored/component";
 
-export interface ComponentRendererProps {
-  props: Record<string, unknown>;
-  children?: ComponentRenderedChildren;
-  host: LocalComponentHost;
-}
+export type ComponentRendererProps<Props = Record<string, unknown>> = LocalComponentRenderProps<Props>;
 
 export type PackagedComponent = (props: ComponentRendererProps) => ReactNode;

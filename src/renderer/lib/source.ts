@@ -1,4 +1,4 @@
-import type { LocalComponentHost } from "../../shared/contracts";
+import type { LocalComponentHost } from "@dash-bored/component";
 import { trackActivity } from "@dash-bored/component";
 
 export type DashboardSource = {
