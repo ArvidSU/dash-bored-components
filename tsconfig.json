@@ -11,25 +11,25 @@
       "bun"
     ],
     "paths": {
-      "@dash-bored/component": [
-        "./.dash-bored-sdk/index.d.ts"
-      ],
-      "react": [
-        "./.dash-bored-sdk/react.d.ts"
-      ],
       "@dash-bored/react-types": [
         "./.dash-bored-sdk/vendor/@types/react/index.d.ts"
       ],
-      "react/jsx-runtime": [
+      "@dash-bored/component-types": [
+        "./.dash-bored-sdk/index.d.ts"
+      ],
+      "@dash-bored/react-facade": [
+        "./.dash-bored-sdk/react.d.ts"
+      ],
+      "@dash-bored/react-jsx-types": [
         "./.dash-bored-sdk/vendor/@types/react/jsx-runtime.d.ts"
       ],
-      "react/jsx-dev-runtime": [
+      "@dash-bored/react-jsx-dev-types": [
         "./.dash-bored-sdk/vendor/@types/react/jsx-dev-runtime.d.ts"
       ],
-      "csstype": [
+      "@dash-bored/css-types": [
         "./.dash-bored-sdk/vendor/csstype/index.d.ts"
       ],
-      "prop-types": [
+      "@dash-bored/prop-types": [
         "./.dash-bored-sdk/vendor/@types/prop-types/index.d.ts"
       ]
     }
@@ -40,6 +40,7 @@
     "scripts"
   ],
   "files": [
-    "./.dash-bored-sdk/css.d.ts"
+    "./.dash-bored-sdk/css.d.ts",
+    "./.dash-bored-sdk/modules.d.ts"
   ]
 }
