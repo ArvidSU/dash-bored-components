@@ -8,6 +8,13 @@ All components run after normal project trust. The package preserves the initial
 
 ## Development
 
+List item colors and glyphs come from `state` or `done`, never from detail or
+tags. Emit `healthy`/`success`, `warning`/`pending`/`running`, `error`/`failed`,
+or `unknown` for explicit observations; arbitrary states stay neutral. `online`
+indicates observed liveness without claiming a healthcheck passed. Per-item
+process feedback uses an amber triangle for Running/Stopping, a green check for
+Finished, and a red cross for failures, based on the actual owned process run.
+
 Use Bun 1.3.14. Run `bun install --frozen-lockfile`, edit the readable source under `src/`, then `bun run build`. Run `bun run check`, `bun run typecheck`, and `bun run test` before publishing. Run `dash-bored component setup <component-directory> --tsconfig <tsconfig.json>` to install the public authoring SDK before typechecking, and `dash-bored component check <component-directory> --source-project <tsconfig.json>` to validate a component. Generated component directories are committed so installs are reproducible. Manifests are the authoritative props, children, actions, resources, and permission contracts. Build changes must preserve shared React and import only the public host SDK.
 
 Agents should use the installed dash-bored skill's `references/components.md#standalone-component-authoring` workflow. Above, `dash-bored` means that skill's absolute launcher path, such as `~/.agents/skills/dash-bored/scripts/dash-bored`, or `"$DASH_BORED_TOOL"` when launched by the app; the command is not installed on PATH. Run setup against this repository's `tsconfig.json` after cloning or updating the app. The SDK supplies ambient editor declarations without redirecting runtime React imports, so tests need to mock only the app's virtual component module. Keep `.dash-bored-sdk/` ignored. Standalone source work does not require initializing a dashboard; use an existing development dashboard later for preview.

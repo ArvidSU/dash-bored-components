@@ -115,10 +115,34 @@
 }
 
 .source-list__item-action > small {
-  color: var(--negative);
   text-align: right;
   max-width: 18rem;
   font-size: .72rem;
+}
+
+.source-list__feedback {
+  display: flex;
+  color: var(--muted);
+  align-items:  center;
+  gap: .25rem;
+}
+
+.source-list__feedback > svg {
+  flex: 0 0 14px;
+  width: 14px;
+  height: 14px;
+}
+
+.source-list__feedback[data-tone="positive"] {
+  color: var(--positive);
+}
+
+.source-list__feedback[data-tone="warning"] {
+  color: var(--warning);
+}
+
+.source-list__feedback[data-tone="negative"] {
+  color: var(--negative);
 }
 
 .source-list__state, .source-list__tag {

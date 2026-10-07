@@ -130,12 +130,12 @@ function SourceListInstance({ props, host, source, filterKey }: ComponentRendere
                 >
                   {configuredAction.name}{action?.running ? " · Running" : ""}
                 </button>
-                {action?.invocation?.status === "failed" ? <small role="alert">{action.invocation.message ?? "Action failed."}</small> : null}
+                {action?.invocation?.status === "failed" ? <small className="source-list__feedback" data-tone="negative" role="alert"><StateGlyph tone="negative" />{action.invocation.message ?? "Action failed."}</small> : null}
                 {ownedRun && (ownedRun.phase === "running" || ownedRun.phase === "stopping")
-                  ? <small role="status">Running</small>
-                  : ownedRun ? <small role="status">{processRunFailed(ownedRun) ? `Failed: ${processRunOutcome(ownedRun)}` : "Finished"}</small>
+                  ? <small className="source-list__feedback" data-tone="warning" role="status"><StateGlyph tone="warning" />{ownedRun.phase === "stopping" ? "Stopping" : "Running"}</small>
+                  : ownedRun ? <small className="source-list__feedback" data-tone={processRunFailed(ownedRun) ? "negative" : "positive"} role="status"><StateGlyph tone={processRunFailed(ownedRun) ? "negative" : "positive"} />{processRunFailed(ownedRun) ? `Failed: ${processRunOutcome(ownedRun)}` : "Finished"}</small>
                     : null}
-                {resolved.error ? <small role="alert">{resolved.error}</small> : null}
+                {resolved.error ? <small className="source-list__feedback" data-tone="negative" role="alert"><StateGlyph tone="negative" />{resolved.error}</small> : null}
               </div>;
             })}
           </div> : null}

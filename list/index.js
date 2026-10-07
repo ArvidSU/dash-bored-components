@@ -1256,20 +1256,48 @@ function SourceListInstance({ props, host, source, filterKey }) {
                                 ]
                               }, undefined, true, undefined, this),
                               action?.invocation?.status === "failed" ? /* @__PURE__ */ jsxDEV4("small", {
+                                className: "source-list__feedback",
+                                "data-tone": "negative",
                                 role: "alert",
-                                children: action.invocation.message ?? "Action failed."
-                              }, undefined, false, undefined, this) : null,
+                                children: [
+                                  /* @__PURE__ */ jsxDEV4(StateGlyph, {
+                                    tone: "negative"
+                                  }, undefined, false, undefined, this),
+                                  action.invocation.message ?? "Action failed."
+                                ]
+                              }, undefined, true, undefined, this) : null,
                               ownedRun && (ownedRun.phase === "running" || ownedRun.phase === "stopping") ? /* @__PURE__ */ jsxDEV4("small", {
+                                className: "source-list__feedback",
+                                "data-tone": "warning",
                                 role: "status",
-                                children: "Running"
-                              }, undefined, false, undefined, this) : ownedRun ? /* @__PURE__ */ jsxDEV4("small", {
+                                children: [
+                                  /* @__PURE__ */ jsxDEV4(StateGlyph, {
+                                    tone: "warning"
+                                  }, undefined, false, undefined, this),
+                                  ownedRun.phase === "stopping" ? "Stopping" : "Running"
+                                ]
+                              }, undefined, true, undefined, this) : ownedRun ? /* @__PURE__ */ jsxDEV4("small", {
+                                className: "source-list__feedback",
+                                "data-tone": processRunFailed(ownedRun) ? "negative" : "positive",
                                 role: "status",
-                                children: processRunFailed(ownedRun) ? `Failed: ${processRunOutcome(ownedRun)}` : "Finished"
-                              }, undefined, false, undefined, this) : null,
+                                children: [
+                                  /* @__PURE__ */ jsxDEV4(StateGlyph, {
+                                    tone: processRunFailed(ownedRun) ? "negative" : "positive"
+                                  }, undefined, false, undefined, this),
+                                  processRunFailed(ownedRun) ? `Failed: ${processRunOutcome(ownedRun)}` : "Finished"
+                                ]
+                              }, undefined, true, undefined, this) : null,
                               resolved.error ? /* @__PURE__ */ jsxDEV4("small", {
+                                className: "source-list__feedback",
+                                "data-tone": "negative",
                                 role: "alert",
-                                children: resolved.error
-                              }, undefined, false, undefined, this) : null
+                                children: [
+                                  /* @__PURE__ */ jsxDEV4(StateGlyph, {
+                                    tone: "negative"
+                                  }, undefined, false, undefined, this),
+                                  resolved.error
+                                ]
+                              }, undefined, true, undefined, this) : null
                             ]
                           }, configuredAction.name, true, undefined, this);
                         })

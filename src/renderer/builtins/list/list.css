@@ -102,10 +102,21 @@
 
 .source-list__item-action > small {
   max-width: 18rem;
-  color: var(--negative);
   font-size: 0.72rem;
   text-align: right;
 }
+
+.source-list__feedback {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--muted);
+}
+
+.source-list__feedback > svg { width: 14px; height: 14px; flex: 0 0 14px; }
+.source-list__feedback[data-tone="positive"] { color: var(--positive); }
+.source-list__feedback[data-tone="warning"] { color: var(--warning); }
+.source-list__feedback[data-tone="negative"] { color: var(--negative); }
 
 .source-list__state,
 .source-list__tag {
