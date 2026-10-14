@@ -9982,10 +9982,10 @@ function useLoadedSource(source, host, refresh) {
 import { jsxDEV as jsxDEV2, Fragment as Fragment2 } from "react/jsx-dev-runtime";
 function MarkdownSourceView({ props, state, unavailable, onRefresh }) {
   const visible = useComponentVisibility2();
-  const title = stringProp(props, ["title"], "Markdown source");
+  const title = stringProp(props, ["title"]);
   if (unavailable)
     return /* @__PURE__ */ jsxDEV2(CapabilityGate, {
-      title,
+      title: title || "Markdown source",
       children: [
         "Trust this project and grant ",
         unavailable,
@@ -9998,20 +9998,26 @@ ${JSON.stringify(state.value, null, 2)}
   return /* @__PURE__ */ jsxDEV2("section", {
     className: "markdown-viewer",
     "data-refreshing": state.loading && state.value !== undefined || undefined,
-    "aria-label": title,
+    "aria-label": title || "Markdown source",
     children: [
       /* @__PURE__ */ jsxDEV2("header", {
-        className: "markdown-viewer__header",
+        className: title ? "markdown-viewer__header" : "markdown-viewer__header markdown-viewer__header--floating",
         children: [
-          /* @__PURE__ */ jsxDEV2("strong", {
-            children: title
-          }, undefined, false, undefined, this),
-          /* @__PURE__ */ jsxDEV2("button", {
-            className: "button button--quiet",
-            type: "button",
-            onClick: onRefresh,
-            disabled: state.loading,
-            children: "Refresh"
+          title ? /* @__PURE__ */ jsxDEV2("div", {
+            className: "markdown-viewer__title",
+            children: /* @__PURE__ */ jsxDEV2("strong", {
+              children: title
+            }, undefined, false, undefined, this)
+          }, undefined, false, undefined, this) : null,
+          /* @__PURE__ */ jsxDEV2("div", {
+            className: "markdown-viewer__actions",
+            children: /* @__PURE__ */ jsxDEV2("button", {
+              className: "button button--quiet button--small",
+              type: "button",
+              onClick: onRefresh,
+              disabled: state.loading,
+              children: "Refresh"
+            }, undefined, false, undefined, this)
           }, undefined, false, undefined, this)
         ]
       }, undefined, true, undefined, this),
@@ -10171,33 +10177,35 @@ function Markdown2({ props, host: componentHost }) {
       unavailable,
       onRefresh: refresh
     }, undefined, false, undefined, this);
-  const title = path ? "Markdown file" : "Markdown";
+  const title = stringProp(props, ["title"]);
   const label = path ? `Markdown preview for ${path}` : "Markdown preview";
+  const editing = view === "raw" || dirty;
   if (path && !filesystem) {
     return /* @__PURE__ */ jsxDEV2(CapabilityGate, {
-      title,
+      title: title || "Markdown file",
       children: "Trust this project to read and edit workspace Markdown files."
     }, undefined, false, undefined, this);
   }
   return /* @__PURE__ */ jsxDEV2("section", {
     className: "markdown-viewer",
     "aria-label": label,
+    "data-editing": editing || undefined,
     children: [
       /* @__PURE__ */ jsxDEV2("header", {
-        className: "markdown-viewer__header",
+        className: title || path ? "markdown-viewer__header" : "markdown-viewer__header markdown-viewer__header--floating",
         children: [
-          /* @__PURE__ */ jsxDEV2("div", {
+          title || path ? /* @__PURE__ */ jsxDEV2("div", {
             className: "markdown-viewer__title",
             children: [
-              /* @__PURE__ */ jsxDEV2("strong", {
+              title ? /* @__PURE__ */ jsxDEV2("strong", {
                 children: title
-              }, undefined, false, undefined, this),
+              }, undefined, false, undefined, this) : null,
               path ? /* @__PURE__ */ jsxDEV2("code", {
                 title: path,
                 children: path
               }, undefined, false, undefined, this) : null
             ]
-          }, undefined, true, undefined, this),
+          }, undefined, true, undefined, this) : null,
           /* @__PURE__ */ jsxDEV2("div", {
             className: "markdown-viewer__actions",
             children: [

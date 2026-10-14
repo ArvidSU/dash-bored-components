@@ -381,25 +381,18 @@ function EnvEditor({ props, host: componentHost }) {
         children: [
           /* @__PURE__ */ jsxDEV2("div", {
             className: "env-editor__title",
-            children: [
-              /* @__PURE__ */ jsxDEV2("span", {
-                className: "env-editor__glyph",
-                "aria-hidden": "true",
-                children: `{ }`
-              }, undefined, false, undefined, this),
-              /* @__PURE__ */ jsxDEV2("div", {
-                children: [
-                  /* @__PURE__ */ jsxDEV2("strong", {
-                    children: "Environment variables"
-                  }, undefined, false, undefined, this),
-                  /* @__PURE__ */ jsxDEV2("code", {
-                    title: path,
-                    children: path
-                  }, undefined, false, undefined, this)
-                ]
-              }, undefined, true, undefined, this)
-            ]
-          }, undefined, true, undefined, this),
+            children: /* @__PURE__ */ jsxDEV2("div", {
+              children: [
+                /* @__PURE__ */ jsxDEV2("strong", {
+                  children: "Environment variables"
+                }, undefined, false, undefined, this),
+                /* @__PURE__ */ jsxDEV2("code", {
+                  title: path,
+                  children: path
+                }, undefined, false, undefined, this)
+              ]
+            }, undefined, true, undefined, this)
+          }, undefined, false, undefined, this),
           /* @__PURE__ */ jsxDEV2("div", {
             className: "env-editor__actions",
             children: [

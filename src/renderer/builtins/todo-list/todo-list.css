@@ -1,19 +1,19 @@
 .todo {
   display: grid;
   min-width: 0;
-  gap: 0.8rem;
-  padding: 13px;
-  border: 1px solid var(--border);
+  gap: 0.6rem;
+  padding: 14px 16px;
+  border: 1px solid var(--core-surface-border, var(--border));
   border-radius: var(--radius);
-  background: var(--surface);
+  color: var(--text);
+  background: var(--core-surface, var(--surface));
+  font-size: var(--font-size-md);
 }
 
-.todo__header,
-.todo__item,
-.todo__form {
-  align-items: center;
+.todo__header, .todo__item, .todo__form {
   display: flex;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .todo__header {
@@ -22,37 +22,43 @@
 
 .todo__header > div {
   display: grid;
-  gap: 0.2rem;
+  gap: 0.15rem;
 }
 
-.todo__header span,
-.todo__filter span,
-.todo__form label span {
+.todo__header strong {
+  font-weight: 650;
+}
+
+.todo__header span, .todo__filter span, .todo__form label span {
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
 }
 
-.todo__filter,
-.todo__form label {
-  align-items: center;
+.todo__filter, .todo__form label {
   display: flex;
+  align-items: center;
   gap: 0.45rem;
 }
 
 .todo__form label {
-  flex: 1 1 14rem;
+  flex: 14rem;
   min-width: 0;
 }
 
-.todo__filter select,
-.todo__form input {
+.todo__filter select, .todo__form input {
+  min-height: 28px;
   min-width: 0;
-  padding: 0.35rem 0.45rem;
+  padding: 0.2rem 0.45rem;
   border: 1px solid var(--border);
-  border-radius: 0.4rem;
+  border-radius: var(--radius-sm);
   color: var(--text);
-  background: var(--surface-raised);
+  background: var(--core-surface, var(--surface));
   font: inherit;
+  font-size: var(--font-size-sm);
+}
+
+.todo__filter select {
+  min-width: 7rem;
 }
 
 .todo__form input {
@@ -61,71 +67,72 @@
 
 .todo__list {
   display: grid;
-  gap: 0.45rem;
 }
 
 .todo__item {
-  align-items: flex-start;
   justify-content: space-between;
-  padding: 0.45rem 0;
-  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+  padding: 0.5rem 0.25rem;
+  border-top: 1px solid transparent;
+}
+
+.todo__item + .todo__item {
+  border-top-color: color-mix(in srgb, var(--border) 70%, transparent);
 }
 
 .todo__item-main {
-  align-items: flex-start;
   display: flex;
-  flex: 1 1 auto;
+  flex: auto;
+  align-items: flex-start;
   gap: 0.55rem;
   min-width: 0;
+  line-height: 1.45;
 }
 
 .todo__item-main > input {
-  flex: 0 0 auto;
-  margin-top: 0.2rem;
   accent-color: var(--accent);
+  flex: none;
+  margin-top: 0.25rem;
 }
 
 .todo__description {
   overflow-wrap: anywhere;
 }
 
-.todo__description-edit,
-.todo__tags-edit {
-  min-width: 0;
-  padding: 0.15rem 0.25rem;
-  border: 1px solid transparent;
+.todo__description-edit, .todo__tags-edit {
   color: inherit;
-  background: transparent;
   font: inherit;
   text-align: left;
   cursor: pointer;
+  background: none;
+  border: 1px solid #0000;
+  border-radius: var(--radius-sm);
+  min-width: 0;
+  padding: 0.1rem 0.25rem;
 }
 
 .todo__description-edit {
-  flex: 1 1 auto;
-  margin: -0.15rem 0;
+  flex: auto;
+  margin: -0.1rem 0;
 }
 
-.todo__description-edit:hover,
-.todo__description-edit:focus-visible,
-.todo__tags-edit:hover,
-.todo__tags-edit:focus-visible {
+.todo__description-edit:hover, .todo__tags-edit:hover,
+.todo__description-edit:focus-visible, .todo__tags-edit:focus-visible {
   border-color: var(--border-bright);
-  border-radius: 0.35rem;
   outline: none;
 }
 
 .todo__item--done .todo__description {
   color: var(--muted);
   text-decoration: line-through;
-  text-decoration-thickness: 0.1em;
+  text-decoration-thickness: 0.08em;
 }
 
 .todo__item-side {
-  align-items: flex-start;
   display: flex;
-  flex: 0 0 auto;
-  gap: 0.55rem;
+  flex: none;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .todo__tags {
@@ -136,37 +143,114 @@
 }
 
 .todo__tags span {
-  padding: 0.15rem 0.4rem;
-  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
-  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
   color: var(--muted);
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
-  font-size: 0.72rem;
+  background: color-mix(in srgb, var(--muted) 12%, transparent);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
 }
 
 .todo__tags-edit {
   display: flex;
-  align-items: center;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .todo__tags-empty {
+  color: var(--faint);
+  font-size: var(--font-size-xs);
+}
+
+/* Row controls are quiet until the row is hovered or focused; editing affordances
+   for rows without tags appear only then. */
+.todo__action, .todo__remove, .todo__add {
+  min-height: 26px;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
   color: var(--muted);
-  font-size: 0.78rem;
+  cursor: pointer;
+  background: transparent;
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 130ms ease, background 130ms ease, border-color 130ms ease, opacity 130ms ease;
+}
+
+.todo__item:hover .todo__action:not(:disabled),
+.todo__action:focus-visible {
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.todo__action:hover:not(:disabled),
+.todo__remove:hover:not(:disabled) {
+  border-color: var(--border-bright);
+  color: var(--text);
+  background: var(--surface-hover);
+}
+
+.todo__remove:hover:not(:disabled) {
+  color: var(--negative);
+}
+
+.todo__remove,
+.todo__tags-edit:has(.todo__tags-empty) {
+  opacity: 0;
+}
+
+.todo__item:hover .todo__remove,
+.todo__item:focus-within .todo__remove,
+.todo__item:hover .todo__tags-edit,
+.todo__item:focus-within .todo__tags-edit {
+  opacity: 1;
+}
+
+.todo__action:disabled, .todo__add:disabled,
+.todo__item:hover .todo__remove:disabled,
+.todo__item:focus-within .todo__remove:disabled {
+  cursor: default;
+  opacity: 0.48;
+}
+
+.todo__item-action {
+  display: grid;
+  justify-items: end;
+  gap: 0.15rem;
+}
+
+.todo__item-action > small {
+  max-width: 18rem;
+  color: var(--muted);
+  font-size: var(--font-size-xs);
+  text-align: right;
+}
+
+.todo__add {
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--surface-raised);
+}
+
+.todo__add:hover:not(:disabled) {
+  border-color: var(--border-bright);
+  background: var(--surface-hover);
 }
 
 .todo__edit-input {
-  min-width: 0;
-  padding: 0.3rem 0.45rem;
   border: 1px solid var(--border-bright);
-  border-radius: 0.4rem;
   color: var(--text);
   background: var(--surface-raised);
   font: inherit;
+  border-radius: var(--radius-sm);
+  min-width: 0;
+  padding: 0.25rem 0.45rem;
 }
 
 .todo__edit-input--description {
-  flex: 1 1 auto;
+  flex: auto;
   width: 100%;
 }
 
@@ -174,80 +258,78 @@
   width: min(100%, 18rem);
 }
 
-.todo button.todo__description-edit,
-.todo button.todo__tags-edit {
-  border-color: transparent;
+.todo button.todo__description-edit, .todo button.todo__tags-edit {
   color: inherit;
-  background: transparent;
-  padding: 0.15rem 0.25rem;
+  background: none;
+  padding: 0.1rem 0.25rem;
 }
 
-.todo button.todo__description-edit:hover:not(:disabled),
-.todo button.todo__description-edit:focus-visible,
-.todo button.todo__tags-edit:hover:not(:disabled),
-.todo button.todo__tags-edit:focus-visible {
-  border-color: var(--border-bright);
-}
-
-.todo__message,
-.todo__error p {
-  margin: 0;
+.todo__message, .todo__error p {
   color: var(--muted);
+  margin: 0;
 }
 
 .todo__error {
   display: grid;
-  gap: 0.2rem;
-  padding: 0.55rem 0.7rem;
   border-left: 3px solid var(--negative);
   background: color-mix(in srgb, var(--negative) 8%, transparent);
+  gap: 0.2rem;
+  padding: 0.55rem 0.7rem;
 }
 
-.todo__error p:first-child,
-.todo__form-error {
+.todo__error p:first-child, .todo__form-error {
   color: var(--negative);
+}
+
+.todo__form {
+  padding-top: 0.6rem;
+  border-top: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
 }
 
 .todo__form-error {
   flex-basis: 100%;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
+}
+
+/* Touch has no hover: keep every row control visible. */
+@media (hover: none) {
+  .todo__remove,
+  .todo__tags-edit:has(.todo__tags-empty) {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 760px) {
-  .todo__header,
-  .todo__item {
-    align-items: flex-start;
+  .todo__header, .todo__item {
     flex-direction: column;
+    align-items: flex-start;
   }
 
-  .todo__filter,
-  .todo__filter select {
+  .todo__filter, .todo__filter select {
     width: 100%;
   }
 
   .todo__form {
-    align-items: stretch;
     flex-wrap: wrap;
+    align-items: stretch;
   }
 
-  .todo__form label,
-  .todo__form > button {
+  .todo__form label, .todo__form > button {
     flex-basis: 100%;
   }
 
   .todo__form label {
-    align-items: stretch;
     flex-direction: column;
+    align-items: stretch;
   }
 
   .todo__item-side {
-    align-items: center;
-    padding-left: 1.55rem;
+    flex-wrap: wrap;
     width: calc(100% - 1.55rem);
+    padding-left: 1.55rem;
   }
 
-  .todo__tags,
-  .todo__tags-edit {
+  .todo__tags, .todo__tags-edit {
     justify-content: flex-start;
   }
 

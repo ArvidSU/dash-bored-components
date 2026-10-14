@@ -818,46 +818,6 @@ function TodoList({ props, host, refreshAction = false }) {
                   /* @__PURE__ */ jsxDEV3("div", {
                     className: "todo__item-side",
                     children: [
-                      configuredActions.actions.map((configuredAction) => {
-                        const resolved = resolveListItemAction(configuredAction, {
-                          ...item,
-                          title: item.description,
-                          state: item.done ? "done" : "open"
-                        });
-                        const invocationKey = `${item.id}:${configuredAction.name}`;
-                        const action = resolved.invocation ? host.actions.resolve(resolved.invocation.run, invocationKey) : undefined;
-                        const disabledReason = resolved.error ?? (action && !action.enabled ? action.disabledReason ?? "This action is unavailable." : undefined);
-                        return /* @__PURE__ */ jsxDEV3("div", {
-                          className: "todo__item-action",
-                          children: [
-                            /* @__PURE__ */ jsxDEV3("button", {
-                              type: "button",
-                              disabled: !resolved.invocation || Boolean(disabledReason) || Boolean(action?.running),
-                              title: disabledReason,
-                              onClick: () => {
-                                if (resolved.invocation)
-                                  host.actions.invoke(resolved.invocation.run, resolved.invocation.with, undefined, invocationKey);
-                              },
-                              children: [
-                                configuredAction.name,
-                                action?.running ? " · Running" : ""
-                              ]
-                            }, undefined, true, undefined, this),
-                            action?.invocation?.status === "failed" ? /* @__PURE__ */ jsxDEV3("small", {
-                              role: "alert",
-                              children: action.invocation.message ?? "Action failed."
-                            }, undefined, false, undefined, this) : null,
-                            action?.invocation?.outcome === "started" ? /* @__PURE__ */ jsxDEV3("small", {
-                              role: "status",
-                              children: "Started"
-                            }, undefined, false, undefined, this) : null,
-                            resolved.error ? /* @__PURE__ */ jsxDEV3("small", {
-                              role: "alert",
-                              children: resolved.error
-                            }, undefined, false, undefined, this) : null
-                          ]
-                        }, configuredAction.name, true, undefined, this);
-                      }),
                       editingTags ? /* @__PURE__ */ jsxDEV3("input", {
                         className: "todo__edit-input todo__edit-input--tags",
                         autoFocus: true,
@@ -893,6 +853,47 @@ function TodoList({ props, host, refreshAction = false }) {
                           children: "Add tags"
                         }, undefined, false, undefined, this)
                       }, undefined, false, undefined, this),
+                      configuredActions.actions.map((configuredAction) => {
+                        const resolved = resolveListItemAction(configuredAction, {
+                          ...item,
+                          title: item.description,
+                          state: item.done ? "done" : "open"
+                        });
+                        const invocationKey = `${item.id}:${configuredAction.name}`;
+                        const action = resolved.invocation ? host.actions.resolve(resolved.invocation.run, invocationKey) : undefined;
+                        const disabledReason = resolved.error ?? (action && !action.enabled ? action.disabledReason ?? "This action is unavailable." : undefined);
+                        return /* @__PURE__ */ jsxDEV3("div", {
+                          className: "todo__item-action",
+                          children: [
+                            /* @__PURE__ */ jsxDEV3("button", {
+                              className: "todo__action",
+                              type: "button",
+                              disabled: !resolved.invocation || Boolean(disabledReason) || Boolean(action?.running),
+                              title: disabledReason,
+                              onClick: () => {
+                                if (resolved.invocation)
+                                  host.actions.invoke(resolved.invocation.run, resolved.invocation.with, undefined, invocationKey);
+                              },
+                              children: [
+                                configuredAction.name,
+                                action?.running ? " · Running" : ""
+                              ]
+                            }, undefined, true, undefined, this),
+                            action?.invocation?.status === "failed" ? /* @__PURE__ */ jsxDEV3("small", {
+                              role: "alert",
+                              children: action.invocation.message ?? "Action failed."
+                            }, undefined, false, undefined, this) : null,
+                            action?.invocation?.outcome === "started" ? /* @__PURE__ */ jsxDEV3("small", {
+                              role: "status",
+                              children: "Started"
+                            }, undefined, false, undefined, this) : null,
+                            resolved.error ? /* @__PURE__ */ jsxDEV3("small", {
+                              role: "alert",
+                              children: resolved.error
+                            }, undefined, false, undefined, this) : null
+                          ]
+                        }, configuredAction.name, true, undefined, this);
+                      }),
                       /* @__PURE__ */ jsxDEV3("button", {
                         className: "todo__remove",
                         type: "button",
@@ -951,6 +952,7 @@ function TodoList({ props, host, refreshAction = false }) {
                 ]
               }, undefined, true, undefined, this),
               /* @__PURE__ */ jsxDEV3("button", {
+                className: "todo__add",
                 type: "submit",
                 disabled: !canWrite,
                 children: "Add item"
@@ -1219,7 +1221,7 @@ function SourceListInstance({ props, host, source, filterKey }) {
                             title: `${change === "new" ? "New" : "Changed"} in the update at ${changedAt}`,
                             children: change === "new" ? "New" : "Changed"
                           }, undefined, false, undefined, this) : null,
-                          typeof item.state === "string" ? /* @__PURE__ */ jsxDEV4("span", {
+                          typeof item.state === "string" && !item.tags?.includes(item.state) ? /* @__PURE__ */ jsxDEV4("span", {
                             className: "source-list__state",
                             children: item.state
                           }, undefined, false, undefined, this) : null,

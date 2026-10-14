@@ -271,25 +271,6 @@ export function TodoList({ props, host, refreshAction = false }: TodoListProps):
                     )}
                   </div>
                   <div className="todo__item-side">
-                    {configuredActions.actions.map((configuredAction) => {
-                      const resolved = resolveListItemAction(configuredAction, {
-                        ...item,
-                        title: item.description,
-                        state: item.done ? "done" : "open",
-                      });
-                      const invocationKey = `${item.id}:${configuredAction.name}`;
-                      const action = resolved.invocation ? host.actions.resolve(resolved.invocation.run, invocationKey) : undefined;
-                      const disabledReason = resolved.error ?? (action && !action.enabled ? action.disabledReason ?? "This action is unavailable." : undefined);
-                      return <div className="todo__item-action" key={configuredAction.name}>
-                        <button type="button" disabled={!resolved.invocation || Boolean(disabledReason) || Boolean(action?.running)} title={disabledReason}
-                          onClick={() => { if (resolved.invocation) host.actions.invoke(resolved.invocation.run, resolved.invocation.with, undefined, invocationKey); }}>
-                          {configuredAction.name}{action?.running ? " · Running" : ""}
-                        </button>
-                        {action?.invocation?.status === "failed" ? <small role="alert">{action.invocation.message ?? "Action failed."}</small> : null}
-                        {action?.invocation?.outcome === "started" ? <small role="status">Started</small> : null}
-                        {resolved.error ? <small role="alert">{resolved.error}</small> : null}
-                      </div>;
-                    })}
                     {editingTags ? (
                       <input
                         className="todo__edit-input todo__edit-input--tags"
@@ -325,6 +306,25 @@ export function TodoList({ props, host, refreshAction = false }: TodoListProps):
                         ) : <span className="todo__tags-empty">Add tags</span>}
                       </button>
                     )}
+                    {configuredActions.actions.map((configuredAction) => {
+                      const resolved = resolveListItemAction(configuredAction, {
+                        ...item,
+                        title: item.description,
+                        state: item.done ? "done" : "open",
+                      });
+                      const invocationKey = `${item.id}:${configuredAction.name}`;
+                      const action = resolved.invocation ? host.actions.resolve(resolved.invocation.run, invocationKey) : undefined;
+                      const disabledReason = resolved.error ?? (action && !action.enabled ? action.disabledReason ?? "This action is unavailable." : undefined);
+                      return <div className="todo__item-action" key={configuredAction.name}>
+                        <button className="todo__action" type="button" disabled={!resolved.invocation || Boolean(disabledReason) || Boolean(action?.running)} title={disabledReason}
+                          onClick={() => { if (resolved.invocation) host.actions.invoke(resolved.invocation.run, resolved.invocation.with, undefined, invocationKey); }}>
+                          {configuredAction.name}{action?.running ? " · Running" : ""}
+                        </button>
+                        {action?.invocation?.status === "failed" ? <small role="alert">{action.invocation.message ?? "Action failed."}</small> : null}
+                        {action?.invocation?.outcome === "started" ? <small role="status">Started</small> : null}
+                        {resolved.error ? <small role="alert">{resolved.error}</small> : null}
+                      </div>;
+                    })}
                     <button
                       className="todo__remove"
                       type="button"
@@ -371,7 +371,7 @@ export function TodoList({ props, host, refreshAction = false }: TodoListProps):
             onChange={(event) => setNewTags(event.target.value)}
           />
         </label>
-        <button type="submit" disabled={!canWrite}>Add item</button>
+        <button className="todo__add" type="submit" disabled={!canWrite}>Add item</button>
         {formError ? <span className="todo__form-error" role="alert">{formError}</span> : null}
       </form>
     </section>

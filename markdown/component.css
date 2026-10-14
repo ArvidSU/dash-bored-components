@@ -1,6 +1,10 @@
 /* src/renderer/lib/component-common.css */
-.source-list[data-refreshing] > header, .markdown-viewer[data-refreshing] > header {
+.source-list[data-refreshing] > header, .markdown-viewer[data-refreshing] > header:not(.markdown-viewer__header--floating) {
   box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.markdown-viewer[data-refreshing]:has( > .markdown-viewer__header--floating) {
+  box-shadow: inset 0 2px 0 color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -19,27 +23,32 @@
   }
 }
 
-.status, .command, .card {
-  box-shadow: var(--shadow-panel);
-}
-
 /* src/renderer/builtins/markdown/markdown.css */
 .markdown-viewer {
+  position: relative;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid var(--core-surface-border, var(--border));
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--core-surface, var(--surface));
   min-width: 0;
 }
 
 .markdown-viewer__header {
   display: flex;
-  border-bottom: 1px solid var(--border);
   justify-content: space-between;
   align-items:  center;
   gap: 14px;
-  min-height: 52px;
-  padding: 8px 11px 8px 13px;
+  min-height: 40px;
+  padding: 8px 10px 0 16px;
+}
+
+.markdown-viewer__header--floating {
+  position: absolute;
+  z-index: 1;
+  min-height: 0;
+  padding: 0;
+  top: 6px;
+  right: 6px;
 }
 
 .markdown-viewer__title, .markdown-viewer__actions, .markdown-viewer__mode {
@@ -54,17 +63,19 @@
 }
 
 .markdown-viewer__title strong {
+  color: var(--text);
+  font-size: var(--font-size-md);
   flex: none;
-  font-size: 12px;
+  font-weight: 650;
 }
 
 .markdown-viewer__title code {
   overflow: hidden;
   color: var(--muted);
+  font-size: var(--font-size-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
-  font-size: 9px;
 }
 
 .markdown-viewer__actions {
@@ -74,23 +85,38 @@
   gap: 7px;
 }
 
+.markdown-viewer__actions {
+  opacity: 0;
+  transition: opacity .13s;
+}
+
+.markdown-viewer:hover .markdown-viewer__actions, .markdown-viewer:focus-within .markdown-viewer__actions, .markdown-viewer[data-editing] .markdown-viewer__actions {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .markdown-viewer__actions {
+    opacity: 1;
+  }
+}
+
 .markdown-viewer__mode {
   border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: 7px;
+  border-radius: var(--radius-sm);
+  background: var(--core-surface, var(--surface));
   padding: 2px;
 }
 
 .markdown-viewer__mode-button {
   color: var(--muted);
   cursor: pointer;
+  font-size: var(--font-size-xs);
   background: none;
   border: 0;
   border-radius: 5px;
-  min-height: 26px;
-  padding: 4px 8px;
-  font-size: 10px;
-  font-weight: 650;
+  min-height: 24px;
+  padding: 3px 8px;
+  font-weight: 600;
 }
 
 .markdown-viewer__mode-button:hover {
@@ -100,7 +126,6 @@
 .markdown-viewer__mode-button--active {
   color: var(--text);
   background: var(--surface-hover);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 6%, transparent);
 }
 
 .editor-node__preview > .markdown, .markdown {
@@ -114,7 +139,11 @@
 }
 
 .markdown-viewer > .markdown {
-  padding: 13px;
+  padding: 14px 16px;
+}
+
+.markdown-viewer__header:not(.markdown-viewer__header--floating) + .markdown {
+  padding-top: 8px;
 }
 
 .markdown > :first-child {
@@ -184,7 +213,11 @@
 }
 
 .markdown-viewer__raw-wrap {
-  padding: 11px 13px 13px;
+  padding: 12px 16px 16px;
+}
+
+.markdown-viewer__header--floating ~ .markdown-viewer__raw-wrap {
+  padding-top: 44px;
 }
 
 .markdown-viewer__raw {
@@ -212,12 +245,12 @@
 }
 
 @media (max-width: 620px) {
-  .markdown-viewer__header {
+  .markdown-viewer__header:not(.markdown-viewer__header--floating) {
     flex-direction: column;
     align-items:  flex-start;
   }
 
-  .markdown-viewer__actions {
+  .markdown-viewer__header:not(.markdown-viewer__header--floating) .markdown-viewer__actions {
     justify-content: flex-start;
     width: 100%;
   }

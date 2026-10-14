@@ -1,20 +1,19 @@
 /* src/renderer/builtins/env/env.css */
 .env-editor {
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid var(--core-surface-border, var(--border));
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--core-surface, var(--surface));
   min-width: 0;
 }
 
 .env-editor__header {
   display: flex;
-  border-bottom: 1px solid var(--border);
   justify-content: space-between;
   align-items:  center;
   gap: 14px;
-  min-height: 58px;
-  padding: 9px 11px 9px 13px;
+  min-height: 48px;
+  padding: 10px 10px 2px 16px;
 }
 
 .env-editor__title, .env-editor__actions, .env-editor__mode {
@@ -34,29 +33,17 @@
 }
 
 .env-editor__title strong {
-  font-size: 12px;
+  color: var(--text);
+  font-size: var(--font-size-md);
+  font-weight: 650;
 }
 
 .env-editor__title code {
   overflow: hidden;
-  color: var(--muted);
+  color: var(--faint);
+  font-size: var(--font-size-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 9px;
-}
-
-.env-editor__glyph {
-  display: grid;
-  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
-  border-radius: var(--radius);
-  color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
-  font-family: var(--font-mono);
-  place-items:  center;
-  width: 32px;
-  height: 32px;
-  font-size: 10px;
-  font-weight: 700;
 }
 
 .env-editor__actions {
@@ -77,12 +64,12 @@
   border-radius: var(--radius-sm);
   color: var(--muted);
   cursor: pointer;
+  font-size: var(--font-size-xs);
   background: none;
   border: 0;
-  min-height: 26px;
-  padding: 4px 8px;
-  font-size: 10px;
-  font-weight: 650;
+  min-height: 24px;
+  padding: 3px 8px;
+  font-weight: 600;
 }
 
 .env-editor__mode-button:hover {
@@ -92,12 +79,11 @@
 .env-editor__mode-button--active {
   color: var(--text);
   background: var(--surface-hover);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 6%, transparent);
 }
 
 .env-editor__table-wrap {
   overflow: auto;
-  padding: 11px 13px 13px;
+  padding: 10px 16px 16px;
 }
 
 .env-editor__table {

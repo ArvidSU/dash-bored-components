@@ -19,11 +19,14 @@ function MarkdownSourceView({ props, state, unavailable, onRefresh }: {
   onRefresh: () => void;
 }): ReactNode {
   const visible = useComponentVisibility();
-  const title = stringProp(props, ["title"], "Markdown source");
-  if (unavailable) return <CapabilityGate title={title}>Trust this project and grant {unavailable} to read this source.</CapabilityGate>;
+  const title = stringProp(props, ["title"]);
+  if (unavailable) return <CapabilityGate title={title || "Markdown source"}>Trust this project and grant {unavailable} to read this source.</CapabilityGate>;
   const text = typeof state.value === "string" ? state.value : state.value === undefined ? "" : `\`\`\`json\n${JSON.stringify(state.value, null, 2)}\n\`\`\``;
-  return <section className="markdown-viewer" data-refreshing={state.loading && state.value !== undefined || undefined} aria-label={title}>
-    <header className="markdown-viewer__header"><strong>{title}</strong><button className="button button--quiet" type="button" onClick={onRefresh} disabled={state.loading}>Refresh</button></header>
+  return <section className="markdown-viewer" data-refreshing={state.loading && state.value !== undefined || undefined} aria-label={title || "Markdown source"}>
+    <header className={title ? "markdown-viewer__header" : "markdown-viewer__header markdown-viewer__header--floating"}>
+      {title ? <div className="markdown-viewer__title"><strong>{title}</strong></div> : null}
+      <div className="markdown-viewer__actions"><button className="button button--quiet button--small" type="button" onClick={onRefresh} disabled={state.loading}>Refresh</button></div>
+    </header>
     {state.loading && state.value === undefined ? <div className="component-state" role="status">Loading…</div> : null}
     {state.loading && state.value !== undefined ? <small className="visually-hidden" role="status">Updating…</small> : null}
     {state.error ? <div className="component-state component-state--error" role="alert">{state.value === undefined ? "Source error" : "Stale value"}: {state.error}</div> : null}
@@ -167,24 +170,27 @@ export default function Markdown({ props, host: componentHost }: ComponentRender
 
   if (sourceSpec !== undefined) return <MarkdownSourceView props={props} state={sourceState} unavailable={unavailable} onRefresh={refresh} />;
 
-  const title = path ? "Markdown file" : "Markdown";
+  const title = stringProp(props, ["title"]);
   const label = path ? `Markdown preview for ${path}` : "Markdown preview";
+  const editing = view === "raw" || dirty;
 
   if (path && !filesystem) {
     return (
-      <CapabilityGate title={title}>
+      <CapabilityGate title={title || "Markdown file"}>
         Trust this project to read and edit workspace Markdown files.
       </CapabilityGate>
     );
   }
 
   return (
-    <section className="markdown-viewer" aria-label={label}>
-      <header className="markdown-viewer__header">
-        <div className="markdown-viewer__title">
-          <strong>{title}</strong>
+    <section className="markdown-viewer" aria-label={label} data-editing={editing || undefined}>
+      {/* Untitled inline content needs no heading row: its controls float in
+          the corner and appear on hover or focus. */}
+      <header className={title || path ? "markdown-viewer__header" : "markdown-viewer__header markdown-viewer__header--floating"}>
+        {title || path ? <div className="markdown-viewer__title">
+          {title ? <strong>{title}</strong> : null}
           {path ? <code title={path}>{path}</code> : null}
-        </div>
+        </div> : null}
         <div className="markdown-viewer__actions">
           <div className="markdown-viewer__mode" role="group" aria-label="Markdown view">
             <button

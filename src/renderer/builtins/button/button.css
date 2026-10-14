@@ -31,28 +31,40 @@
   min-height: 40px;
 }
 
+/* Tabs are navigation, not buttons: text on a baseline rule, the selected one
+   underlined. */
 .action-button--tabs {
-  gap: 4px;
-  padding: 5px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+  gap: 2px;
+  border-bottom: 1px solid var(--border);
 }
 
 .action-button--tabs .action-button__control {
-  background: transparent;
+  min-height: 38px;
+  margin-bottom: -1px;
+  padding: 8px 14px;
   border: 0;
-  border-radius: var(--radius-sm);
-  min-height: 40px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  color: var(--muted);
+  background: transparent;
+  font-weight: 600;
 }
 
-.action-button--tabs .action-button__control[data-active] {
+.action-button--tabs .action-button__control:hover:not(:disabled) {
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface-hover) 50%, transparent);
+  box-shadow: none;
+}
+
+.action-button--tabs .action-button__control[data-active],
+.action-button--tabs .action-button__control[data-active]:hover:not(:disabled) {
+  color: var(--text);
+  background: transparent;
   box-shadow: inset 0 -2px 0 var(--accent);
 }
 
 .action-button__control {
   align-items: center;
-  background: color-mix(in srgb, var(--surface-raised) 88%, transparent);
+  background: var(--core-surface, var(--surface));
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--text);
@@ -61,18 +73,17 @@
   font: inherit;
   font-size: var(--font-size-sm);
   font-weight: 600;
-  gap: 0.65rem;
+  gap: 0.55rem;
   justify-content: center;
-  min-height: 44px;
-  padding: 0.68rem 0.9rem;
+  min-height: 40px;
+  padding: 0.55rem 0.9rem;
   transition: background 140ms ease, border-color 140ms ease, color 140ms ease, transform 140ms ease;
   width: 100%;
 }
 
 .action-button__control:hover:not(:disabled) {
   background: var(--surface-hover);
-  border-color: var(--accent);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--shadow-color) 12%, transparent);
+  border-color: var(--border-bright);
 }
 
 .action-button__control:focus-visible {
@@ -104,11 +115,11 @@
   to { transform: rotate(360deg); }
 }
 
-.action-button--tabs .action-button__item,
+.action-button--tabs .action-button__item { flex: 0 0 auto; }
 .action-button--segmented .action-button__item { flex: 1 1 auto; }
 
 .action-button__control:active:not(:disabled) { transform: scale(0.98); }
 .action-button__control > span { overflow-wrap: anywhere; }
-.action-button__icon { display: grid; place-items: center; width: 18px; height: 18px; flex: 0 0 18px; color: var(--accent); }
-.action-button__icon svg { width: 18px; height: 18px; }
+.action-button__icon { display: grid; place-items: center; width: 16px; height: 16px; flex: 0 0 16px; color: var(--accent); }
+.action-button__icon svg { width: 16px; height: 16px; }
 .action-button__control[data-running] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }

@@ -90,8 +90,68 @@ function verbLabel(verb, label) {
   return normalize(label).split(" ")[0] === normalize(verb) ? label : `${verb} ${label}`;
 }
 
+// src/renderer/lib/state-visual.tsx
+import { jsxDEV as jsxDEV2, Fragment } from "react/jsx-dev-runtime";
+var CLOSED_STATES = new Set(["done", "completed", "closed"]);
+var POSITIVE_STATES = new Set(["ok", "online", "healthy", "success", "passed", "ready", ...CLOSED_STATES]);
+var WARNING_STATES = new Set(["warn", "warning", "pending", "starting", "running", "stopping", "blocked", "degraded", "stale"]);
+var NEGATIVE_STATES = new Set(["error", "failed", "failing", "offline", "down", "bug", "broken"]);
+function actionVerb(reference) {
+  if (reference.startsWith("process:"))
+    return "process";
+  if (reference.startsWith("agent:"))
+    return "agent";
+  if (reference.startsWith("select:") || reference.startsWith("reveal:") || reference.startsWith("focus:"))
+    return "navigate";
+  if (reference.endsWith(":refresh"))
+    return "refresh";
+  return "action";
+}
+function ActionGlyph({ reference }) {
+  const verb = actionVerb(reference);
+  return /* @__PURE__ */ jsxDEV2("svg", {
+    viewBox: "0 0 20 20",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.6",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    "aria-hidden": "true",
+    children: verb === "process" ? /* @__PURE__ */ jsxDEV2("path", {
+      d: "m7 4 9 6-9 6Z"
+    }, undefined, false, undefined, this) : verb === "agent" ? /* @__PURE__ */ jsxDEV2("path", {
+      d: "m10 2 2.3 5.7L18 10l-5.7 2.3L10 18l-2.3-5.7L2 10l5.7-2.3Z"
+    }, undefined, false, undefined, this) : verb === "navigate" ? /* @__PURE__ */ jsxDEV2("path", {
+      d: "M3 10h13m-5-5 5 5-5 5"
+    }, undefined, false, undefined, this) : verb === "refresh" ? /* @__PURE__ */ jsxDEV2(Fragment, {
+      children: [
+        /* @__PURE__ */ jsxDEV2("path", {
+          d: "M16 10a6 6 0 1 1-1.8-4.3"
+        }, undefined, false, undefined, this),
+        /* @__PURE__ */ jsxDEV2("path", {
+          d: "M16 3v4h-4"
+        }, undefined, false, undefined, this)
+      ]
+    }, undefined, true, undefined, this) : /* @__PURE__ */ jsxDEV2(Fragment, {
+      children: [
+        /* @__PURE__ */ jsxDEV2("circle", {
+          cx: "10",
+          cy: "10",
+          r: "6.5"
+        }, undefined, false, undefined, this),
+        /* @__PURE__ */ jsxDEV2("circle", {
+          cx: "10",
+          cy: "10",
+          r: "1.8",
+          fill: "currentColor"
+        }, undefined, false, undefined, this)
+      ]
+    }, undefined, true, undefined, this)
+  }, undefined, false, undefined, this);
+}
+
 // src/renderer/builtins/command/index.tsx
-import { jsxDEV as jsxDEV2 } from "react/jsx-dev-runtime";
+import { jsxDEV as jsxDEV3 } from "react/jsx-dev-runtime";
 function Command({
   props,
   host: componentHost
@@ -144,7 +204,7 @@ function Command({
       setTerminalVisible(true);
   }, [live]);
   if (!processApi || !attachOnly && (!processApi.start || !processApi.stop)) {
-    return /* @__PURE__ */ jsxDEV2(CapabilityGate, {
+    return /* @__PURE__ */ jsxDEV3(CapabilityGate, {
       title: label,
       children: "Trust this project to run its configured command."
     }, undefined, false, undefined, this);
@@ -195,53 +255,65 @@ function Command({
       setPending(false);
     }
   }
-  return /* @__PURE__ */ jsxDEV2("div", {
+  return /* @__PURE__ */ jsxDEV3("div", {
     className: "command",
     children: [
-      /* @__PURE__ */ jsxDEV2("div", {
+      /* @__PURE__ */ jsxDEV3("div", {
         className: "command__content",
         children: [
-          /* @__PURE__ */ jsxDEV2("strong", {
-            children: label
-          }, undefined, false, undefined, this),
-          command ? /* @__PURE__ */ jsxDEV2("code", {
+          /* @__PURE__ */ jsxDEV3("div", {
+            className: "command__title",
+            children: [
+              /* @__PURE__ */ jsxDEV3("strong", {
+                children: label
+              }, undefined, false, undefined, this),
+              run ? /* @__PURE__ */ jsxDEV3("span", {
+                className: runActive ? "phase phase--running" : processRunFailed(run) ? "phase phase--failed" : "phase",
+                title: runActive ? "The command is running." : "Result of the latest run.",
+                children: processRunOutcome(run)
+              }, undefined, false, undefined, this) : live ? /* @__PURE__ */ jsxDEV3("span", {
+                className: "phase",
+                children: "open"
+              }, undefined, false, undefined, this) : null
+            ]
+          }, undefined, true, undefined, this),
+          command ? /* @__PURE__ */ jsxDEV3("code", {
+            title: command,
             children: command
-          }, undefined, false, undefined, this) : null,
-          run ? /* @__PURE__ */ jsxDEV2("span", {
-            className: runActive ? "phase phase--running" : processRunFailed(run) ? "phase phase--failed" : "phase",
-            title: runActive ? "The command is running." : "Result of the latest run.",
-            children: processRunOutcome(run)
-          }, undefined, false, undefined, this) : live ? /* @__PURE__ */ jsxDEV2("span", {
-            className: "phase",
-            children: "open"
           }, undefined, false, undefined, this) : null
         ]
       }, undefined, true, undefined, this),
-      /* @__PURE__ */ jsxDEV2("div", {
+      /* @__PURE__ */ jsxDEV3("div", {
         className: "command__actions",
         children: [
-          terminalVisible ? /* @__PURE__ */ jsxDEV2("button", {
+          terminalVisible ? /* @__PURE__ */ jsxDEV3("button", {
             className: "button button--quiet button--small",
             type: "button",
             onClick: () => setScrollToLatest((value) => value + 1),
             children: "Latest output"
           }, undefined, false, undefined, this) : null,
-          canStart && !live ? /* @__PURE__ */ jsxDEV2("button", {
+          canStart && !live ? /* @__PURE__ */ jsxDEV3("button", {
             className: "button button--quiet button--small",
             type: "button",
             disabled: pending,
             onClick: () => void openTerminal(),
             children: "Open terminal"
           }, undefined, false, undefined, this) : null,
-          canStart ? /* @__PURE__ */ jsxDEV2("button", {
-            className: "button button--primary",
+          canStart ? /* @__PURE__ */ jsxDEV3("button", {
+            className: "button command__run",
             type: "button",
             disabled: pending || stopping || runActive,
             title: runActive ? "The command is running. Press Ctrl-C in the terminal or close it to stop." : undefined,
+            "aria-label": pending || runActive ? undefined : `Run ${label}`,
             onClick: () => void runQuickAction(),
-            children: pending ? "Working…" : runActive ? "Running…" : label
-          }, undefined, false, undefined, this) : null,
-          live && canStop ? /* @__PURE__ */ jsxDEV2("button", {
+            children: [
+              /* @__PURE__ */ jsxDEV3(ActionGlyph, {
+                reference: "process:run"
+              }, undefined, false, undefined, this),
+              pending ? "Working…" : runActive ? "Running…" : "Run"
+            ]
+          }, undefined, true, undefined, this) : null,
+          live && canStop ? /* @__PURE__ */ jsxDEV3("button", {
             className: "button button--danger",
             type: "button",
             disabled: pending || stopping,
@@ -250,14 +322,14 @@ function Command({
           }, undefined, false, undefined, this) : null
         ]
       }, undefined, true, undefined, this),
-      terminalVisible ? /* @__PURE__ */ jsxDEV2(TerminalSurface, {
+      terminalVisible ? /* @__PURE__ */ jsxDEV3(TerminalSurface, {
         process,
         onWrite: processApi.write,
         onResize: processApi.resize,
         scrollToLatest,
         label: `Interactive terminal for ${label}`
       }, undefined, false, undefined, this) : null,
-      error ? /* @__PURE__ */ jsxDEV2("p", {
+      error ? /* @__PURE__ */ jsxDEV3("p", {
         className: "inline-error",
         role: "alert",
         children: error

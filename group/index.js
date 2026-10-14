@@ -20,10 +20,10 @@ function Group({ props, children }) {
   if (!title && !description)
     return childSurface(children);
   return /* @__PURE__ */ jsxDEV2("section", {
-    className: "card",
+    className: "group",
     children: [
       /* @__PURE__ */ jsxDEV2("header", {
-        className: "card__header",
+        className: "group__header",
         children: [
           title ? /* @__PURE__ */ jsxDEV2("h2", {
             children: title
@@ -34,7 +34,7 @@ function Group({ props, children }) {
         ]
       }, undefined, true, undefined, this),
       /* @__PURE__ */ jsxDEV2("div", {
-        className: "card__body",
+        className: "group__body",
         children: childSurface(children)
       }, undefined, false, undefined, this)
     ]

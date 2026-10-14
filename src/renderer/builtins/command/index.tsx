@@ -7,6 +7,7 @@ import type { ComponentRendererProps } from "../types";
 import { CapabilityGate, stringProp } from "../shared";
 import { isProcessLive, isProcessRunActive, processRun, processRunFailed, processRunOutcome } from "../../../shared/process-state";
 import { verbLabel } from "../../lib/actions";
+import { ActionGlyph } from "../../lib/state-visual";
 
 export default function Command({
   props,
@@ -122,16 +123,18 @@ export default function Command({
   return (
     <div className="command">
       <div className="command__content">
-        <strong>{label}</strong>
-        {command ? <code>{command}</code> : null}
-        {run ? (
-          <span
-            className={runActive ? "phase phase--running" : processRunFailed(run) ? "phase phase--failed" : "phase"}
-            title={runActive ? "The command is running." : "Result of the latest run."}
-          >
-            {processRunOutcome(run)}
-          </span>
-        ) : live ? <span className="phase">open</span> : null}
+        <div className="command__title">
+          <strong>{label}</strong>
+          {run ? (
+            <span
+              className={runActive ? "phase phase--running" : processRunFailed(run) ? "phase phase--failed" : "phase"}
+              title={runActive ? "The command is running." : "Result of the latest run."}
+            >
+              {processRunOutcome(run)}
+            </span>
+          ) : live ? <span className="phase">open</span> : null}
+        </div>
+        {command ? <code title={command}>{command}</code> : null}
       </div>
       <div className="command__actions">
         {terminalVisible ? (
@@ -146,13 +149,15 @@ export default function Command({
         ) : null}
         {canStart ? (
           <button
-            className="button button--primary"
+            className="button command__run"
             type="button"
             disabled={pending || stopping || runActive}
             title={runActive ? "The command is running. Press Ctrl-C in the terminal or close it to stop." : undefined}
+            aria-label={pending || runActive ? undefined : `Run ${label}`}
             onClick={() => void runQuickAction()}
           >
-            {pending ? "Working…" : runActive ? "Running…" : label}
+            <ActionGlyph reference="process:run" />
+            {pending ? "Working…" : runActive ? "Running…" : "Run"}
           </button>
         ) : null}
         {live && canStop ? (

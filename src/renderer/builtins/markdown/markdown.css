@@ -1,19 +1,29 @@
 .markdown-viewer {
+  position: relative;
   min-width: 0;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid var(--core-surface-border, var(--border));
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--core-surface, var(--surface));
 }
 
 .markdown-viewer__header {
   display: flex;
-  min-height: 52px;
+  min-height: 40px;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  padding: 8px 11px 8px 13px;
-  border-bottom: 1px solid var(--border);
+  padding: 8px 10px 0 16px;
+}
+
+/* Untitled content: the controls overlay the top-right corner. */
+.markdown-viewer__header--floating {
+  position: absolute;
+  z-index: 1;
+  top: 6px;
+  right: 6px;
+  min-height: 0;
+  padding: 0;
 }
 
 .markdown-viewer__title,
@@ -31,14 +41,16 @@
 
 .markdown-viewer__title strong {
   flex: 0 0 auto;
-  font-size: 12px;
+  color: var(--text);
+  font-size: var(--font-size-md);
+  font-weight: 650;
 }
 
 .markdown-viewer__title code {
   min-width: 0;
   overflow: hidden;
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-size-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -50,23 +62,40 @@
   gap: 7px;
 }
 
+/* View controls are an editing affordance: shown on hover, focus, or while
+   editing, never as permanent chrome over the content. */
+.markdown-viewer__actions {
+  opacity: 0;
+  transition: opacity 130ms ease;
+}
+
+.markdown-viewer:hover .markdown-viewer__actions,
+.markdown-viewer:focus-within .markdown-viewer__actions,
+.markdown-viewer[data-editing] .markdown-viewer__actions {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .markdown-viewer__actions { opacity: 1; }
+}
+
 .markdown-viewer__mode {
   padding: 2px;
   border: 1px solid var(--border);
-  border-radius: 7px;
-  background: var(--surface);
+  border-radius: var(--radius-sm);
+  background: var(--core-surface, var(--surface));
 }
 
 .markdown-viewer__mode-button {
-  min-height: 26px;
-  padding: 4px 8px;
+  min-height: 24px;
+  padding: 3px 8px;
   border: 0;
   border-radius: 5px;
   color: var(--muted);
   background: transparent;
   cursor: pointer;
-  font-size: 10px;
-  font-weight: 650;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
 }
 
 .markdown-viewer__mode-button:hover {
@@ -76,7 +105,6 @@
 .markdown-viewer__mode-button--active {
   color: var(--text);
   background: var(--surface-hover);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 6%, transparent);
 }
 
 .editor-node__preview > .markdown,
@@ -88,7 +116,8 @@
 
 .editor-node__preview > .markdown { margin: 12px; }
 
-.markdown-viewer > .markdown { padding: 13px; }
+.markdown-viewer > .markdown { padding: 14px 16px; }
+.markdown-viewer__header:not(.markdown-viewer__header--floating) + .markdown { padding-top: 8px; }
 
 .markdown > :first-child { margin-top: 0; }
 .markdown > :last-child { margin-bottom: 0; }
@@ -145,7 +174,11 @@
 }
 
 .markdown-viewer__raw-wrap {
-  padding: 11px 13px 13px;
+  padding: 12px 16px 16px;
+}
+
+.markdown-viewer__header--floating ~ .markdown-viewer__raw-wrap {
+  padding-top: 44px;
 }
 
 .markdown-viewer__raw {
@@ -173,12 +206,12 @@
 }
 
 @media (max-width: 620px) {
-  .markdown-viewer__header {
+  .markdown-viewer__header:not(.markdown-viewer__header--floating) {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .markdown-viewer__actions {
+  .markdown-viewer__header:not(.markdown-viewer__header--floating) .markdown-viewer__actions {
     width: 100%;
     justify-content: flex-start;
   }

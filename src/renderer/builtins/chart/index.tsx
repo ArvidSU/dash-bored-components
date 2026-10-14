@@ -232,7 +232,7 @@ export function ChartPanel({
       <header className="chart__header">
         <div className="chart__heading">
           <strong>{title}</strong>
-          {status ? <span>{loading && data ? "Updating…" : status}</span> : null}
+          {loading && data ? <span>Updating…</span> : status ? <span>{status}</span> : null}
         </div>
         {onRefresh ? (
           <button className="button button--quiet button--small chart__refresh" type="button" onClick={onRefresh} disabled={loading} aria-label={loading ? "Refreshing chart" : "Refresh"}>
@@ -248,17 +248,18 @@ export function ChartPanel({
       ) : (
         <div className="component-state">{loading ? "Loading chart data…" : "No chart data yet."}</div>
       )}
-      {data ? (
+      {/* One series needs no legend: the title already names it. */}
+      {data && (data.series.length > 1 || updatedAt) ? (
         <footer className="chart__footer">
-          <div className="chart__legend">
+          {data.series.length > 1 ? <div className="chart__legend">
             {data.series.map((series, index) => (
               <span className="chart__legend-item" key={series.label}>
                 <i style={{ backgroundColor: chartColor(series, index) }} />
                 {series.label}
               </span>
             ))}
-          </div>
-          {updatedAt ? <span>Updated {updatedAt.toLocaleTimeString()}</span> : null}
+          </div> : null}
+          {updatedAt ? <span className="chart__updated">Updated {updatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span> : null}
         </footer>
       ) : null}
     </section>
@@ -287,10 +288,9 @@ export default function Chart({ props, host }: ComponentRendererProps): ReactNod
   const error = unavailable
     ? `Trust this project to read the source (${unavailable}).`
     : sourceState.error ?? shapeError;
-  const status = source
-    ? !panelVisible ? "Paused while hidden"
-      : source.every ? `Refreshes every ${Math.round(source.every / 1000)}s` : "Source"
-    : chartType(props);
+  // The heading states only what the reader must know now; polling cadence and
+  // chart type are configuration, not status.
+  const status = source && !panelVisible ? "Paused while hidden" : undefined;
   return (
     <ChartPanel
       data={data}

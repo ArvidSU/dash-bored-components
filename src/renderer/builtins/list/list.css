@@ -1,11 +1,11 @@
 .source-list {
   display: grid;
   min-width: 0;
-  gap: 0.7rem;
-  padding: 13px;
-  border: 1px solid var(--border);
+  gap: 0.6rem;
+  padding: 14px 16px;
+  border: 1px solid var(--core-surface-border, var(--border));
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--core-surface, var(--surface));
 }
 
 .source-list__header,
@@ -16,7 +16,7 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem;
+  gap: 0.5rem;
 }
 
 .source-list__header {
@@ -26,7 +26,13 @@
 .source-list__header > div:first-child,
 .source-list__item-text {
   display: grid;
-  gap: 0.2rem;
+  gap: 0.15rem;
+}
+
+.source-list__header > div:first-child > strong {
+  color: var(--text);
+  font-size: var(--font-size-md);
+  font-weight: 650;
 }
 
 .source-list__header span,
@@ -34,23 +40,50 @@
 .source-list__item-text > span,
 .source-list__empty {
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 
 .source-list__controls select {
   min-width: 7rem;
-  padding: 0.3rem 0.4rem;
+  min-height: 28px;
+  padding: 0.2rem 0.4rem;
   border: 1px solid var(--border);
-  border-radius: 0.4rem;
+  border-radius: var(--radius-sm);
   color: var(--text);
-  background: var(--surface-raised);
+  background: var(--core-surface, var(--surface));
   font: inherit;
+  font-size: var(--font-size-sm);
+}
+
+/* Header and row actions stay visible but quiet; the data leads. */
+.source-list__controls > .button,
+.source-list__item-action > .button {
+  min-height: 28px;
+  padding: 5px 9px;
+  border-color: transparent;
+  color: var(--muted);
+  background: transparent;
+  box-shadow: none;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.source-list__controls > .button:hover:not(:disabled),
+.source-list__item:hover .source-list__item-action > .button:not(:disabled),
+.source-list__item-action > .button:focus-visible {
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--core-surface, var(--surface));
+}
+
+.source-list__item-action > .button:hover:not(:disabled) {
+  border-color: var(--border-bright);
+  background: var(--surface-hover);
 }
 
 .source-list__items,
 .source-list__diagnostics {
   display: grid;
-  gap: 0.45rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -61,13 +94,18 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 0.7rem;
+  gap: 0.6rem;
   min-width: 0;
-  padding: 0.65rem;
+  padding: 0.6rem 0.5rem;
   border: 1px solid transparent;
-  border-bottom-color: var(--border);
   border-radius: var(--radius-sm);
   transition: background 150ms ease, border-color 150ms ease;
+}
+
+.source-list__item + .source-list__item {
+  border-top-color: color-mix(in srgb, var(--border) 70%, transparent);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .source-list__item-text {
@@ -91,7 +129,7 @@
 .source-list__item-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.25rem;
 }
 
 .source-list__item-action {
@@ -102,7 +140,7 @@
 
 .source-list__item-action > small {
   max-width: 18rem;
-  font-size: 0.72rem;
+  font-size: var(--font-size-xs);
   text-align: right;
 }
 
@@ -118,14 +156,20 @@
 .source-list__feedback[data-tone="warning"] { color: var(--warning); }
 .source-list__feedback[data-tone="negative"] { color: var(--negative); }
 
-.source-list__state,
-.source-list__tag {
-  padding: 0.15rem 0.4rem;
-  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
-  border-radius: var(--radius-sm);
+/* State is text; tags are small quiet chips, so the two never look alike. */
+.source-list__state {
   color: var(--muted);
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
-  font-size: 0.72rem;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.source-list__tag {
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--muted) 12%, transparent);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
 }
 
 .source-list__diagnostics {
@@ -144,10 +188,10 @@
   .source-list__item-action > small { text-align: left; }
 }
 
-.source-list__item:hover { background: var(--surface-hover); }
-.source-list__item:focus-within { border-color: var(--border-bright); background: var(--surface-hover); }
+.source-list__item:hover { background: color-mix(in srgb, var(--surface-hover) 55%, transparent); }
+.source-list__item:focus-within { border-color: var(--border-bright); background: color-mix(in srgb, var(--surface-hover) 55%, transparent); }
 .source-list__item-leading { display: flex; flex: 1 1 14rem; align-items: flex-start; gap: 10px; min-width: 0; }
-.source-list__glyph { width: 20px; height: 20px; flex: 0 0 20px; color: var(--muted); }
+.source-list__glyph { width: 18px; height: 18px; flex: 0 0 18px; margin-top: 1px; color: var(--muted); }
 .source-list__glyph svg { width: 100%; height: 100%; }
 .source-list__item[data-tone="positive"] .source-list__glyph,
 .source-list__item[data-tone="positive"] .source-list__state { color: var(--positive); }
@@ -155,16 +199,17 @@
 .source-list__item[data-tone="warning"] .source-list__state { color: var(--warning); }
 .source-list__item[data-tone="negative"] .source-list__glyph,
 .source-list__item[data-tone="negative"] .source-list__state { color: var(--negative); }
-.source-list__item-text > strong { font-size: var(--font-size-md); font-weight: 600; line-height: 1.4; }
+.source-list__item-text > strong { color: var(--text); font-size: var(--font-size-md); font-weight: 500; line-height: 1.4; }
 
 /* Changed since the previous differing observation: a text badge stays; the tint is brief. */
 .source-list__change {
-  padding: 0.15rem 0.4rem;
-  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
-  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
   color: var(--accent);
-  font-size: 0.72rem;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  font-size: var(--font-size-xs);
   font-weight: 600;
+  line-height: 1.5;
 }
 
 .source-list__item[data-change] { border-left-color: color-mix(in srgb, var(--accent) 55%, transparent); }

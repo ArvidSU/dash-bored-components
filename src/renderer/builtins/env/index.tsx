@@ -154,7 +154,6 @@ export default function EnvEditor({ props, host: componentHost }: ComponentRende
     <section className="env-editor" aria-label={`Environment editor for ${path}`}>
       <header className="env-editor__header">
         <div className="env-editor__title">
-          <span className="env-editor__glyph" aria-hidden="true">{`{ }`}</span>
           <div>
             <strong>Environment variables</strong>
             <code title={path}>{path}</code>

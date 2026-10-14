@@ -108,7 +108,7 @@ function SourceListInstance({ props, host, source, filterKey }: ComponentRendere
         <div className="source-list__item-trailing">
           <div className="source-list__item-meta">
             {change ? <span className="source-list__change" title={`${change === "new" ? "New" : "Changed"} in the update at ${changedAt}`}>{change === "new" ? "New" : "Changed"}</span> : null}
-            {typeof item.state === "string" ? <span className="source-list__state">{item.state}</span> : null}
+            {typeof item.state === "string" && !item.tags?.includes(item.state) ? <span className="source-list__state">{item.state}</span> : null}
             {item.tags?.map((tag, index) => <span className="source-list__tag" key={`${tag}-${index}`}>{tag}</span>)}
           </div>
           {configuredActions.actions.length ? <div className="source-list__item-actions" aria-label={`Actions for ${item.title}`}>

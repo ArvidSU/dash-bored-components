@@ -4,14 +4,14 @@
   display: grid;
   box-sizing: border-box;
   height: 100%;
-  grid-template-columns: 28px minmax(0, 1fr) auto;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
   align-content: start;
   align-items: center;
-  gap: 7px 10px;
+  gap: 3px 10px;
   padding: 14px 16px;
-  border: 1px solid color-mix(in srgb, var(--status-tone) 28%, var(--border));
+  border: 1px solid var(--core-surface-border, var(--border));
   border-radius: var(--radius);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--status-tone) 6%, var(--surface)), var(--surface));
+  background: var(--core-surface, var(--surface));
   font-size: var(--font-size-sm);
   transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
 }
@@ -20,16 +20,22 @@
 .status[data-tone="warning"] { --status-tone: var(--warning); }
 .status[data-tone="negative"] { --status-tone: var(--negative); }
 
+/* Only states that need attention tint the surface; healthy and unknown stay
+   quiet so the eye lands on what changed or broke. */
+.status[data-tone="warning"],
+.status[data-tone="negative"] {
+  border-color: color-mix(in srgb, var(--status-tone) 50%, var(--core-surface, var(--surface)));
+  background: color-mix(in srgb, var(--status-tone) 7%, var(--core-surface, var(--surface)));
+}
+
 .status__dot {
   grid-row: 1 / 3;
   grid-column: 1;
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-sm);
+  width: 20px;
+  height: 20px;
   color: var(--status-tone);
-  background: color-mix(in srgb, var(--status-tone) 12%, transparent);
   transition: opacity 180ms ease;
 }
 
@@ -40,20 +46,24 @@
   grid-column: 2;
   grid-row: 1;
   color: var(--muted);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   font-weight: 550;
   overflow-wrap: anywhere;
 }
 
+/* Healthy and unknown values read as plain text beside their glyph. */
 .status__value {
   grid-column: 2;
   grid-row: 2;
-  color: var(--status-tone);
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  line-height: 1.15;
+  color: var(--text);
+  font-size: var(--font-size-lg);
+  font-weight: 650;
+  line-height: 1.25;
   overflow-wrap: anywhere;
 }
+
+.status[data-tone="warning"] .status__value,
+.status[data-tone="negative"] .status__value { color: var(--status-tone); }
 
 /* Changed since the previous observation: persistent text, brief ring. */
 .status__changed {
@@ -95,12 +105,13 @@
 
 .status__detail {
   grid-column: 1 / -1;
+  margin-top: 6px;
   color: var(--muted);
-  line-height: 1.5;
+  line-height: 1.45;
   overflow-wrap: anywhere;
 }
 
-.status__meter { grid-column: 1 / -1; min-width: 0; }
+.status__meter { grid-column: 1 / -1; min-width: 0; margin-top: 4px; }
 
 .status__diagnostic {
   grid-column: 1 / -1;
@@ -124,14 +135,12 @@
   /* Column gaps would also separate absent auto tracks, so items carry margins. */
   gap: 3px 0;
   padding: 8px 11px;
-  background: var(--surface);
 }
 
 .status--compact .status__dot {
   grid-row: 1;
   width: 18px;
   height: 18px;
-  background: none;
 }
 
 .status--compact .status__dot svg { width: 16px; height: 16px; }
@@ -173,6 +182,7 @@
 .status--compact .status__diagnostic { grid-column: 2 / -1; }
 
 .status--compact .status__detail {
+  margin-top: 0;
   overflow: hidden;
   font-size: var(--font-size-xs);
   line-height: 1.35;

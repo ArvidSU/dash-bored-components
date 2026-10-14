@@ -3,49 +3,58 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
-  padding: 13px;
-  border: 1px solid var(--border);
+  padding: 12px 12px 12px 16px;
+  border: 1px solid var(--core-surface-border, var(--border));
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--core-surface, var(--surface));
 }
 
 .command__content {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.command__title {
   display: flex;
   min-width: 0;
   align-items: center;
   flex-wrap: wrap;
-  gap: 7px 9px;
+  gap: 4px 8px;
 }
 
-.command__content strong {
-  font-size: 12px;
+.command__title strong {
+  color: var(--text);
+  font-size: var(--font-size-md);
+  font-weight: 600;
 }
 
+/* The command is reference detail: one faint line, full text on hover. */
 .command__content code {
   overflow: hidden;
   max-width: 100%;
-  color: var(--muted);
-  font-size: 9px;
+  color: var(--faint);
+  font-size: var(--font-size-xs);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+/* The latest outcome is state, so it keeps tone; idle chrome stays neutral. */
 .phase {
   display: inline-flex;
   align-items: center;
-  padding: 3px 6px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  padding: 1px 6px;
+  border-radius: 4px;
   color: var(--muted);
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  background: color-mix(in srgb, var(--muted) 12%, transparent);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  line-height: 1.5;
 }
 
-.phase--running { border-color: color-mix(in srgb, var(--positive) 20%, transparent); color: var(--positive); }
-.phase--failed { border-color: color-mix(in srgb, var(--negative) 22%, transparent); color: var(--negative); }
-.phase--stopping { border-color: color-mix(in srgb, var(--warning) 20%, transparent); color: var(--warning); }
+.phase--running { color: var(--warning); background: color-mix(in srgb, var(--warning) 14%, transparent); }
+.phase--failed { color: var(--negative); background: color-mix(in srgb, var(--negative) 14%, transparent); }
+.phase--stopping { color: var(--warning); background: color-mix(in srgb, var(--warning) 14%, transparent); }
 
 .inline-error {
   grid-column: 1 / -1;
@@ -73,9 +82,43 @@
 .command__actions {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
   justify-content: flex-end;
+}
+
+.command__actions > .button--quiet {
+  border-color: transparent;
+  color: var(--muted);
+  background: transparent;
+  box-shadow: none;
+}
+
+.command__actions > .button--quiet:hover:not(:disabled) {
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--surface-hover);
+}
+
+.command__run {
+  box-shadow: none;
+  min-height: 32px;
+  padding: 6px 12px 6px 10px;
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--surface-raised);
+}
+
+.command__run:hover:not(:disabled) {
+  border-color: var(--border-bright);
+  background: var(--surface-hover);
+}
+
+.command__run svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  color: var(--accent);
 }
 
 .command__terminal {

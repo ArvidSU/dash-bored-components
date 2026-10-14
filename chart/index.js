@@ -478,8 +478,10 @@ function ChartPanel({
               /* @__PURE__ */ jsxDEV3("strong", {
                 children: title
               }, undefined, false, undefined, this),
-              status ? /* @__PURE__ */ jsxDEV3("span", {
-                children: loading && data ? "Updating…" : status
+              loading && data ? /* @__PURE__ */ jsxDEV3("span", {
+                children: "Updating…"
+              }, undefined, false, undefined, this) : status ? /* @__PURE__ */ jsxDEV3("span", {
+                children: status
               }, undefined, false, undefined, this) : null
             ]
           }, undefined, true, undefined, this),
@@ -518,10 +520,10 @@ function ChartPanel({
         className: "component-state",
         children: loading ? "Loading chart data…" : "No chart data yet."
       }, undefined, false, undefined, this),
-      data ? /* @__PURE__ */ jsxDEV3("footer", {
+      data && (data.series.length > 1 || updatedAt) ? /* @__PURE__ */ jsxDEV3("footer", {
         className: "chart__footer",
         children: [
-          /* @__PURE__ */ jsxDEV3("div", {
+          data.series.length > 1 ? /* @__PURE__ */ jsxDEV3("div", {
             className: "chart__legend",
             children: data.series.map((series, index) => /* @__PURE__ */ jsxDEV3("span", {
               className: "chart__legend-item",
@@ -532,11 +534,12 @@ function ChartPanel({
                 series.label
               ]
             }, series.label, true, undefined, this))
-          }, undefined, false, undefined, this),
+          }, undefined, false, undefined, this) : null,
           updatedAt ? /* @__PURE__ */ jsxDEV3("span", {
+            className: "chart__updated",
             children: [
               "Updated ",
-              updatedAt.toLocaleTimeString()
+              updatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
             ]
           }, undefined, true, undefined, this) : null
         ]
@@ -556,7 +559,7 @@ function Chart({ props, host }) {
   const data = rawData ? limitChartData(rawData, numberProp(props, "maxPoints", 60)) : null;
   const shapeError = source && sourceState.value !== undefined && rawData === null ? `Source shape: expected { labels: string[], series: [{ label: string, values: (number | null)[] }] }${typeof props.dataPath === "string" && props.dataPath ? ` at ${props.dataPath}` : ""}.` : undefined;
   const error = unavailable ? `Trust this project to read the source (${unavailable}).` : sourceState.error ?? shapeError;
-  const status = source ? !panelVisible ? "Paused while hidden" : source.every ? `Refreshes every ${Math.round(source.every / 1000)}s` : "Source" : chartType(props);
+  const status = source && !panelVisible ? "Paused while hidden" : undefined;
   return /* @__PURE__ */ jsxDEV3(ChartPanel, {
     data,
     error,
