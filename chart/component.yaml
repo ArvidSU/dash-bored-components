@@ -1,6 +1,7 @@
 schemaVersion: 3
 apiVersion: "2.0.0"
 id: core/chart
+labelProps: [title]
 name: Chart
 description: "Plots line or bar data from YAML or a bounded source emitting {
   labels: string[], series: [{ label, values }] }."

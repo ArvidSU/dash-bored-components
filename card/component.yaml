@@ -1,6 +1,7 @@
 schemaVersion: 3
 apiVersion: "2.0.0"
 id: core/card
+labelProps: [title]
 name: Card
 description: Frames dashboard content with an optional title.
 entry: ./index.tsx

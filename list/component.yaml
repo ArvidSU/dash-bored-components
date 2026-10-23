@@ -1,6 +1,7 @@
 schemaVersion: 3
 apiVersion: "2.0.0"
 id: core/list
+labelProps: [title]
 name: List
 description: Renders stable-ID items from a bounded source or editable YAML
   todos. Source items that are new or changed in the latest differing

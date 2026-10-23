@@ -1,6 +1,7 @@
 schemaVersion: 3
 apiVersion: "2.0.0"
 id: core/selection
+labelProps: [label]
 name: Selection container
 description: Shows one managed child at a time using core-owned selection
   actions and persisted state.

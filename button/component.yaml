@@ -1,6 +1,7 @@
 schemaVersion: 3
 apiVersion: "2.0.0"
 id: core/button
+labelProps: [label, name]
 name: Action button
 description: Invokes one action or a compact bar of actions, with availability
   and invocation feedback.

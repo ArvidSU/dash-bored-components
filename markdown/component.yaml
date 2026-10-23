@@ -1,6 +1,7 @@
 schemaVersion: 3
 apiVersion: "2.0.0"
 id: core/markdown
+labelProps: [title]
 name: Markdown
 description: Previews safe Markdown from inline content or a project file, with
   raw editing and bounded source polling.

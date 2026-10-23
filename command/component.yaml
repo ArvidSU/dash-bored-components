@@ -1,6 +1,7 @@
 schemaVersion: 3
 apiVersion: "2.0.0"
 id: core/command
+labelProps: [label]
 name: Command
 description: Runs a remembered quick action in a persistent interactive terminal.
 entry: ./index.tsx

@@ -1,6 +1,7 @@
 schemaVersion: 3
 apiVersion: "2.0.0"
 id: core/live-chart
+labelProps: [title]
 name: Live chart
 description: Polls a JSON endpoint and plots its chart-shaped response.
 entry: ./index.tsx

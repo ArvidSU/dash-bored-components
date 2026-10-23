@@ -1,6 +1,7 @@
 schemaVersion: 3
 apiVersion: "2.0.0"
 id: core/status
+labelProps: [label]
 name: Status
 description: Displays a labeled state, with optional bounded sources emitting {
   state, detail?, trend?, segments? } or a supervised process snapshot.

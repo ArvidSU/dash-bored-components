@@ -1,6 +1,7 @@
 schemaVersion: 3
 apiVersion: "2.0.0"
 id: core/group
+labelProps: [title]
 name: Group
 description: Provides a tiled composition boundary with optional title and description.
 entry: ./index.tsx
