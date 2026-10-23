@@ -1,5 +1,5 @@
 schemaVersion: 3
-apiVersion: "1.0.0"
+apiVersion: "2.0.0"
 id: core/selection
 name: Selection container
 description: Shows one managed child at a time using core-owned selection
@@ -16,6 +16,7 @@ propsSchema:
       minLength: 1
     label: *a1
 children:
+  defaultChildProp: defaultChild
   min: 1
   presentation:
     type: managed

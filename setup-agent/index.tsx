@@ -3,36 +3,37 @@ import type { ReactNode } from "react";
 import type { ComponentRendererProps } from "../shared/types";
 import { CapabilityGate } from "../shared/shared";
 import "./setup-agent.css";
+import { SETUP_PROMPT } from "../shared/setup-prompt";
 
 export default function SetupAgent({ host }: ComponentRendererProps): ReactNode {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const configured = host.environment?.values.find((entry) => entry.key === "DASH_BORED_AGENT");
-  const command = configured?.value?.trim() || "codex exec";
+  const command = configured?.value?.trim() || "the configured coding agent";
   const missing = configured?.source === "unset" || !configured?.value?.trim();
-  const setupWithAgent = host.dashboard.setupWithAgent;
+  const setupAction = host.actions.resolve("agent:prompt");
 
   const start = useCallback(async (reportFailure = false): Promise<void> => {
     setPending(true);
     setError(null);
     try {
-      await setupWithAgent?.();
+      host.actions.invoke("agent:prompt", { template: "dashboard", prompt: SETUP_PROMPT });
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : String(cause));
       if (reportFailure) throw cause;
     } finally {
       setPending(false);
     }
-  }, [setupWithAgent]);
+  }, [host.actions, setupAction.enabled]);
 
   useEffect(() => host.actions.register({
-    id: "setup", label: "Set up dashboard with agent", enabled: Boolean(setupWithAgent) && !pending && !missing,
-    disabledReason: !setupWithAgent ? "Trust this project to run its configured agent." : missing ? "Configure DASH_BORED_AGENT first." : "Agent setup is starting.",
+    id: "setup", label: "Set up dashboard with agent", enabled: setupAction.enabled && !pending,
+    disabledReason: !setupAction.enabled ? setupAction.disabledReason : "Agent setup is starting.",
     confirmation: { title: "Set up dashboard with agent?", message: `Run ${command} to customize this dashboard.` },
     run: () => start(true),
-  }), [host.actions, setupWithAgent, pending, missing, command, start]);
+  }), [host.actions, setupAction.enabled, setupAction.disabledReason, pending, command, start]);
 
-  if (!setupWithAgent) {
+  if (!setupAction.enabled) {
     return <CapabilityGate title="Set up this dashboard">Trust this project to run its configured agent.</CapabilityGate>;
   }
 

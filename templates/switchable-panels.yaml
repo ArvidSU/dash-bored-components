@@ -1,0 +1,43 @@
+id: switchable-panels
+component: ${package}/group
+children:
+  axis: vertical
+  first:
+    node:
+      id: switchable-tabs
+      component: ${package}/button
+      props:
+        variant: tabs
+        label: Panels
+        items:
+          - name: First
+            action: select:switchable-content/first-panel
+          - name: Second
+            action: select:switchable-content/second-panel
+  second:
+    node:
+      id: switchable-content
+      component: ${package}/selection
+      props:
+        defaultChild: first-panel
+      children:
+        - metadata:
+            label: First
+          node:
+            id: first-panel
+            component: ${package}/markdown
+            props:
+              content: |-
+                # First panel
+
+                Replace this content.
+        - metadata:
+            label: Second
+          node:
+            id: second-panel
+            component: ${package}/markdown
+            props:
+              content: |-
+                # Second panel
+
+                Replace this content.

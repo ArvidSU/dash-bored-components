@@ -15,7 +15,7 @@ describe("editable source package", () => {
       const directory = resolve(root, name);
       const manifest = parse(await readFile(resolve(directory, "component.yaml"), "utf8"));
       expect(manifest.id).toBe(`core/${name}`);
-      expect(manifest.apiVersion).toBe("1.0.0");
+      expect(manifest.apiVersion).toBe("2.0.0");
       expect(manifest.entry).toBe("./index.tsx");
       expect(manifest.sourceRoot).toBe("..");
       expect(manifest.types).toBeUndefined();

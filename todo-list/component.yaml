@@ -1,5 +1,5 @@
 schemaVersion: 3
-apiVersion: "1.0.0"
+apiVersion: "2.0.0"
 id: core/todo-list
 name: YAML todo list
 description: Keeps a small todo list in this component's dashboard YAML props.
@@ -84,3 +84,5 @@ propsSchema:
 references:
   itemActions.*.action:
     resource: action
+deprecated:
+  replacement: "a `list` with `todos`"

@@ -1,5 +1,5 @@
 schemaVersion: 3
-apiVersion: "1.0.0"
+apiVersion: "2.0.0"
 id: core/status
 name: Status
 description: Displays a labeled state, with optional bounded sources emitting {
@@ -87,3 +87,7 @@ actions:
 references:
   source.process:
     resource: process
+resources:
+  observation:
+    sourceProp: source
+    kind: status

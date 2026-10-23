@@ -1,0 +1,298 @@
+schemaVersion: 4
+name: ${projectName}
+icon: ./assets/icon.svg
+root:
+  id: tour
+  component: ${package}/group
+  props:
+    title: Tour the components
+    description: Each tab explains one component, shows it working on this project, and suggests something to try.
+  children:
+    axis: vertical
+    first:
+      node:
+        id: tour-tabs
+        component: ${package}/button
+        props:
+          variant: tabs
+          label: Component tour
+          items:
+            - name: Status
+              action: select:tour-panels/tour-status
+            - name: List
+              action: select:tour-panels/tour-list
+            - name: Chart
+              action: select:tour-panels/tour-chart
+            - name: Markdown
+              action: select:tour-panels/tour-markdown
+            - name: Command
+              action: select:tour-panels/tour-command
+            - name: Todos
+              action: select:tour-panels/tour-todos
+            - name: Layout & editing
+              action: select:tour-panels/tour-layout
+    second:
+      node:
+        id: tour-panels
+        component: ${package}/selection
+        props:
+          defaultChild: tour-status
+          label: Component tour
+        children:
+          - metadata:
+              label: Status
+            node:
+              id: tour-status
+              component: ${package}/group
+              children:
+                axis: horizontal
+                ratio: 0.4
+                first:
+                  node:
+                    id: tour-status-guide
+                    component: ${package}/markdown
+                    props:
+                      content: |
+                        ### Status
+                        A labeled state (healthy, warning, error, or unknown) read from a source such as a shell command, file, or URL. Use it for “is it running?” questions.
+
+                        The status beside this text counts this project's files by when they last changed. Its detail and bar come from a small shell command that prints `{ state, detail, segments }`.
+
+                        **Try it:** save any file in the project and wait about ten seconds: the counts move and the status marks what changed. Open the panel menu and choose **Edit component** to read the command.
+                second:
+                  node:
+                    id: tour-activity-status
+                    component: ${package}/status
+                    props:
+                      label: Project activity
+                      source:
+                        shell: |-
+                          files() { if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then git ls-files -z --cached --others --exclude-standard; else find . -mindepth 1 \( -name '.*' -o -name node_modules \) -prune -o -type f -print0; fi; }
+                          count() { files | xargs -0 sh -c 'find "$@" -prune -type f '"$1"' -print' sh 2>/dev/null | wc -l | tr -d ' '; }
+                          all=$(count ""); day=$(count "-mtime -1"); week=$(($(count "-mtime -7") - day)); older=$((all - day - week))
+                          if [ "$all" -eq 0 ]; then echo '{"state":"unknown","detail":"No project files found yet."}'; exit 0; fi
+                          if [ $((day + week)) -gt 0 ]; then state=healthy; detail="$day changed today, $week earlier this week, $older older."; else state=warning; detail="No file changes in the last 7 days."; fi
+                          printf '{"state":"%s","detail":"%s","segments":[{"label":"Today","value":%s,"state":"healthy"},{"label":"This week","value":%s},{"label":"Older","value":%s,"state":"unknown"}]}\n' "$state" "$detail" "$day" "$week" "$older"
+                        cwd: .
+                        timeoutMs: 10000
+                        every: 10000
+          - metadata:
+              label: List
+            node:
+              id: tour-list
+              component: ${package}/group
+              children:
+                axis: horizontal
+                ratio: 0.4
+                first:
+                  node:
+                    id: tour-list-guide
+                    component: ${package}/markdown
+                    props:
+                      content: |
+                        ### List
+                        Items with stable IDs from a source, with tags to filter and per-item actions. Use it for work queues, recent changes, or runnable scripts.
+
+                        This list shows the most recently modified files in this project. Items that appear or change between refreshes are marked.
+
+                        **Try it:** press **Details** on a file. The command panel below runs with that file as `$DASH_ITEM_PATH` and prints its size, type, and first lines. Choose a tag to filter by file type.
+                second:
+                  axis: vertical
+                  first:
+                    node:
+                      id: tour-recent-files
+                      component: ${package}/list
+                      props:
+                        title: Recently modified files
+                        sort: source-order
+                        source:
+                          shell: |-
+                            files() { if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then git ls-files -z --cached --others --exclude-standard; else find . -mindepth 1 \( -name '.*' -o -name node_modules \) -prune -o -type f -print0; fi; }
+                            files | xargs -0 ls -td -- 2>/dev/null | head -n 12 | awk 'function q(s){gsub(/\\/,"\\\\",s);gsub(/"/,"\\\"",s);gsub(/\t/,"\\t",s);return "\"" s "\""} BEGIN{printf "["} {p=$0; sub(/^\.\//,"",p); n=split(p,a,"/"); name=a[n]; dir=(n>1)?substr(p,1,length(p)-length(name)-1):"."; ext="no extension"; if (match(name,/\.[^.]+$/) && RSTART>1) ext=substr(name,RSTART); printf "%s{\"id\":%s,\"title\":%s,\"detail\":%s,\"tags\":[%s],\"path\":%s}", (NR>1?",":""), q(p), q(name), q(dir), q(ext), q(p)} END{print "]"}'
+                          cwd: .
+                          timeoutMs: 10000
+                          every: 15000
+                        itemActions:
+                          - name: Details
+                            action:
+                              run: component:tour-file-details:run
+                              with:
+                                path: ${item.path}
+                  second:
+                    node:
+                      id: tour-file-details
+                      component: ${package}/command
+                      props:
+                        label: Show the selected file
+                        command: ls -l -- "$DASH_ITEM_PATH" && file -b -- "$DASH_ITEM_PATH" && case "$(file -b --mime-type -- "$DASH_ITEM_PATH")" in text/*) echo && head -n 40 -- "$DASH_ITEM_PATH";; esac
+                        cwd: .
+          - metadata:
+              label: Chart
+            node:
+              id: tour-chart
+              component: ${package}/group
+              children:
+                axis: horizontal
+                ratio: 0.4
+                first:
+                  node:
+                    id: tour-chart-guide
+                    component: ${package}/markdown
+                    props:
+                      content: |
+                        ### Chart
+                        Line or bar charts from inline YAML or a source that prints `{ labels, series }`. Use it for trends such as build times, test counts, or traffic.
+
+                        This chart counts this project's files by extension. Inside a Git work tree it follows your ignore rules; elsewhere it skips hidden folders and `node_modules`.
+
+                        **Try it:** hover a bar for its value. Add a few files and press **Refresh** from the command palette.
+                second:
+                  node:
+                    id: tour-file-types
+                    component: ${package}/chart
+                    props:
+                      title: Files by type
+                      type: bar
+                      source:
+                        shell: |-
+                          files() { if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then git ls-files -z --cached --others --exclude-standard; else find . -mindepth 1 \( -name '.*' -o -name node_modules \) -prune -o -type f -print0; fi; }
+                          files | tr '\0' '\n' | awk -F/ '{n=$NF; e="no extension"; if (match(n,/\.[^.]+$/) && RSTART>1) e=substr(n,RSTART); c[e]++} END{for (e in c) print c[e] "\t" e}' | sort -rn | head -n 8 | awk -F'\t' 'function q(s){gsub(/\\/,"\\\\",s);gsub(/"/,"\\\"",s);gsub(/\t/,"\\t",s);return "\"" s "\""} {l=l (NR>1?",":"") q($2); v=v (NR>1?",":"") $1} END{printf "{\"labels\":[%s],\"series\":[{\"label\":\"Files\",\"values\":[%s]}]}\n", l, v}'
+                        cwd: .
+                        timeoutMs: 10000
+                        every: 60000
+          - metadata:
+              label: Markdown
+            node:
+              id: tour-markdown
+              component: ${package}/group
+              children:
+                axis: horizontal
+                ratio: 0.4
+                first:
+                  node:
+                    id: tour-markdown-guide
+                    component: ${package}/markdown
+                    props:
+                      content: |
+                        ### Markdown
+                        Safe Markdown from inline YAML, a project file, or a command's output. Use it for runbooks, READMEs, and generated reports.
+
+                        The panel beside this text renders this project's `README.md`, read fresh each time the tab opens.
+
+                        **Try it:** edit `README.md` and switch tabs to reload it. A Markdown panel pointed at a file with `path:` can also be edited and saved in place.
+                second:
+                  node:
+                    id: tour-readme
+                    component: ${package}/markdown
+                    props:
+                      title: README.md
+                      source:
+                        shell: if [ -f README.md ]; then head -c 60000 README.md; else printf '%s\n\n' '### No README.md yet' 'This panel renders README.md from the project root once it exists. Until then, here are the top-level entries:'; ls -1p | head -n 30 | sed 's/^/- /'; fi
+                        cwd: .
+                        timeoutMs: 5000
+          - metadata:
+              label: Command
+            node:
+              id: tour-command
+              component: ${package}/group
+              children:
+                axis: horizontal
+                ratio: 0.4
+                first:
+                  node:
+                    id: tour-command-guide
+                    component: ${package}/markdown
+                    props:
+                      content: |
+                        ### Command
+                        A remembered command with a persistent terminal. Use it for dev servers, tests, builds, and deploys. It keeps running while you switch tabs and dashboards.
+
+                        **Try it:** run the command beside this text to list this folder. Run and stop commands from the command palette (**Command-K**, then type the command's name), or bind them to a keyboard shortcut in **Settings → Actions**.
+                second:
+                  node:
+                    id: tour-list-folder
+                    component: ${package}/command
+                    props:
+                      label: List this project folder
+                      command: ls -la
+                      cwd: .
+          - metadata:
+              label: Todos
+            node:
+              id: tour-todos
+              component: ${package}/group
+              children:
+                axis: horizontal
+                ratio: 0.4
+                first:
+                  node:
+                    id: tour-todos-guide
+                    component: ${package}/markdown
+                    props:
+                      content: |
+                        ### Todos
+                        A list whose items live in this dashboard's YAML, so they travel with the project and show up in code review.
+
+                        **Try it:** tick an item. dash-bored opens a draft; press **Save dashboard** to write the change to `dash-bored.yaml`, or **Cancel** to discard it.
+                second:
+                  node:
+                    id: tour-ideas
+                    component: ${package}/list
+                    props:
+                      title: Ideas for this dashboard
+                      todos:
+                        - id: idea-dev-server
+                          description: Add a command that starts the dev server
+                          done: false
+                          tags:
+                            - act
+                        - id: idea-tests
+                          description: Add a status that runs the test suite on demand
+                          done: false
+                          tags:
+                            - observe
+                        - id: idea-docs
+                          description: Link the project's runbook or docs with a Markdown panel
+                          done: false
+                          tags:
+                            - overview
+                        - id: idea-local-ui
+                          description: Embed a local web UI with a webview
+                          done: false
+                          tags:
+                            - observe
+          - metadata:
+              label: Layout & editing
+            node:
+              id: tour-layout
+              component: ${package}/group
+              children:
+                axis: horizontal
+                ratio: 0.4
+                first:
+                  node:
+                    id: tour-layout-guide
+                    component: ${package}/markdown
+                    props:
+                      content: |
+                        ### Layout & editing
+                        Everything on this page is one YAML tree in `.dash-bored/dash-bored.yaml`: groups with titles, horizontal and vertical splits, and switchable panels like this tab bar (an action bar selecting a child of a selection container).
+
+                        Four ways to change it, all through the same draft that you Save or Cancel:
+
+                        - **Component library**: add, move, and remove components and fill in their props.
+                        - **Panel menu** (right-click a panel): Edit component, Focus, Collapse, Copy component path, or **Change with agent** to describe a change in words.
+                        - **Command-K**: search every app, dashboard, and component action.
+                        - **Your agent**: edit the YAML directly with the skill's tools.
+
+                        **Try it:** open the component library, or right-click this panel.
+                second:
+                  node:
+                    id: tour-layout-actions
+                    component: ${package}/button
+                    props:
+                      items:
+                        - name: Open component library
+                          action: project:edit
+                        - name: Focus a component
+                          action: project:focus

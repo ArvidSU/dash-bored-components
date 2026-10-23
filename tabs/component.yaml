@@ -1,5 +1,5 @@
 schemaVersion: 3
-apiVersion: "1.0.0"
+apiVersion: "2.0.0"
 id: core/tabs
 name: Tabs
 description: Switches between labeled dashboard panels.
@@ -34,3 +34,5 @@ children:
       label: *a1
     required:
       - label
+deprecated:
+  replacement: "a `selection` with a `variant: tabs` button"

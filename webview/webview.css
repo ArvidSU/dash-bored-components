@@ -27,8 +27,7 @@
   white-space: nowrap;
 }
 
-.webview-shell__placeholder,
-.webview-shell__view {
+.webview-shell__surface {
   display: block;
   aspect-ratio: 16 / 9;
   width: 100%;
@@ -36,7 +35,7 @@
   max-height: 720px;
 }
 
-.webview-shell__view {
+.webview-shell__surface {
   min-width: 0;
   background: var(--accent-ink);
 }

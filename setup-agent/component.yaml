@@ -1,5 +1,5 @@
 schemaVersion: 3
-apiVersion: "1.0.0"
+apiVersion: "2.0.0"
 id: core/setup-agent
 name: Dashboard setup agent
 description: Runs the configured CLI agent to customize this starter dashboard.
@@ -14,3 +14,5 @@ propsSchema:
   properties: {}
 permissions:
   - process:execute
+deprecated:
+  replacement: "a `button` running `agent:prompt` with the setup prompt"

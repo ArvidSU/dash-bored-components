@@ -1,0 +1,35 @@
+schemaVersion: 1
+templates:
+  - id: starter
+    name: Get started
+    description: Set up a project cockpit with your coding agent.
+    path: templates/starter.yaml
+    role: starter
+  - id: tutorial
+    name: Component tour
+    description: Explore components with real project data.
+    path: templates/tutorial.yaml
+    role: tutorial
+  - id: switchable-panels
+    name: Switchable panels
+    description: A tab bar controlling two panels.
+    path: templates/switchable-panels.yaml
+migrations:
+  references:
+    "@dash-bored/tabs": ./tabs
+    "@dash-bored/card": ./card
+    "@dash-bored/todo-list": ./todo-list
+    "@dash-bored/conditional": ./conditional
+    "@dash-bored/group": ./group
+    "@dash-bored/markdown": ./markdown
+    "@dash-bored/chart": ./chart
+    "@dash-bored/webview": ./webview
+    "@dash-bored/status": ./status
+    "@dash-bored/env": ./env
+    "@dash-bored/button": ./button
+    "@dash-bored/list": ./list
+    "@dash-bored/live-chart": ./live-chart
+    "@dash-bored/selection": ./selection
+    "@dash-bored/setup-agent": ./setup-agent
+    "@dash-bored/command": ./command
+    "@dash-bored/focus-timer": ./focus-timer

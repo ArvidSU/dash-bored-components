@@ -1,5 +1,5 @@
 schemaVersion: 3
-apiVersion: "1.0.0"
+apiVersion: "2.0.0"
 id: core/conditional
 name: Conditional visibility
 description: Recovery visibility for one tiled child based on a bounded shell
@@ -45,3 +45,5 @@ children:
     axes: both
 permissions:
   - process:execute
+deprecated:
+  replacement: "none yet; leave existing uses (planned: a source-bound `when` on the parent-child edge)"

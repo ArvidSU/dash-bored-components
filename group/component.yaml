@@ -1,5 +1,5 @@
 schemaVersion: 3
-apiVersion: "1.0.0"
+apiVersion: "2.0.0"
 id: core/group
 name: Group
 description: Provides a tiled composition boundary with optional title and description.

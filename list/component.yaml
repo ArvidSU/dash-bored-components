@@ -1,5 +1,5 @@
 schemaVersion: 3
-apiVersion: "1.0.0"
+apiVersion: "2.0.0"
 id: core/list
 name: List
 description: Renders stable-ID items from a bounded source or editable YAML
@@ -155,3 +155,7 @@ references:
     resource: process
   itemActions.*.action:
     resource: action
+resources:
+  observation:
+    sourceProp: source
+    kind: list

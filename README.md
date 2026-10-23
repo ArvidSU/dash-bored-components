@@ -2,9 +2,9 @@
 
 The standard components for [dash-bored](https://github.com/ArvidSU/dash-bored), published as an ordinary Git-pinned external package. MIT licensed.
 
-Install this repository as `core`. Dashboards reference `./components/external/core/button`, `./components/external/core/group`, and the other component directories at the repository root. Each directory contains a schema-v3 `component.yaml`, its editable `index.tsx`, and any component CSS for API 1.0.0. Manifests declare `sourceRoot: ..` so components can import the common `shared/` helpers and other component sources within this package. The app compiles these sources through the same public compiler used for local components. The full commit is pinned in the dashboard's lock file; no dependency installation is needed by the dashboard.
+Install this repository as `core`. Dashboards reference `./components/external/core/button`, `./components/external/core/group`, and the other component directories at the repository root. Each directory contains a schema-v3 `component.yaml`, its editable `index.tsx`, and any component CSS for API 2.0.0. Manifests declare `sourceRoot: ..` so components can import the common `shared/` helpers and other component sources within this package. The app compiles these sources through the same public compiler used for local components. The full commit is pinned in the dashboard's lock file; no dependency installation is needed by the dashboard.
 
-All components run after normal project trust. The package preserves the initial 17 components, including legacy adapters; extraction does not retire their behavior. The package targets component API 1.0.0 and dashboard contract 4. React and `@dash-bored/component` use the host app's runtime.
+All components run after normal project trust. The package preserves the initial 17 components, including legacy adapters; extraction does not retire their behavior. The package targets component API 2.0.0 and dashboard contract 4. React and `@dash-bored/component` use the host app's runtime.
 
 ## Development
 
@@ -23,14 +23,15 @@ Updates are explicit. Publish a tag, review the source changes, and update dashb
 
 ## Prepared browser dependencies
 
-Markdown imports `vendor/react-markdown.js`, a committed browser dependency
+Markdown imports `vendor/react-markdown.js` and Command imports `vendor/xterm.js`, committed browser dependencies
 prepared with the public authoring tool. Dashboard installation needs only Git;
 it never installs npm packages or runs a package lifecycle script. React and
 `@dash-bored/component` remain supplied by the host. To update the dependency,
-update `react-markdown` and the lockfile, install dependencies, then run:
+update the dependency and the lockfile, install dependencies, then run:
 
 ```sh
 dash-bored component prepare . --dependency react-markdown --output vendor/react-markdown.js
+dash-bored component prepare . --dependency @xterm/xterm --output vendor/xterm.js
 ```
 
 Review the dependency output and its adjacent declaration before publishing.
@@ -38,3 +39,20 @@ The declaration records the small synchronous renderer interface used here.
 `THIRD_PARTY_NOTICES.md` carries the bundled dependency licenses.
 Do not prepare the component sources themselves: their manifests point directly
 at the editable TSX entries.
+
+## Package templates and compatibility
+
+`package.yaml` lists this package's starter, tutorial, and switchable-panels
+templates and legacy reference migrations. Templates use `${package}` for the
+installed component prefix, `${projectName}` for the project name, and
+`${environmentPath}` for the environment file. Item templates remain intact.
+Component retirement hints live on each manifest's `deprecated.replacement`.
+Observation bindings, process labels, and default-child props are declared in
+manifest metadata rather than inferred from component names.
+
+Command owns its terminal renderer, fitting, styling, and theme translation.
+Its vendored xterm declarations and CSS come from `@xterm/xterm` 6.0.0; copy
+`typings/xterm.d.ts` (removing its ambient module wrapper) and `css/xterm.css`
+when updating xterm, and review its license in `THIRD_PARTY_NOTICES.md`.
+Webview owns its header, reload action, and sizing; the host provides only the
+permission-gated native surface.

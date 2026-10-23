@@ -1,5 +1,5 @@
 schemaVersion: 3
-apiVersion: "1.0.0"
+apiVersion: "2.0.0"
 id: core/env
 name: Environment editor
 description: Edits a project-local .env file as key-value pairs or raw text.
