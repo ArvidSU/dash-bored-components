@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { filterListItems, parseDashboardList, parseListItemActions, resolveListItemAction, sortListItems } from "../../src/renderer/lib/list-data";
+import { filterListItems, parseDashboardList, parseListItemActions, resolveListItemAction, sortListItems } from "../../shared/lib/list-data";
 
 describe("source list shape and presentation", () => {
   test("requires source-owned non-empty unique string IDs and titles", () => {

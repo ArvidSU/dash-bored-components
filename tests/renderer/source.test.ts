@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import type { ComponentManifest, LocalComponentHost } from "@dash-bored/component";
-import { decodeSourceText, readDashboardSource } from "../../src/renderer/lib/source";
-import { permissionsForComponent } from "../../src/shared/component-permissions";
+import { decodeSourceText, readDashboardSource } from "../../shared/lib/source";
+import { permissionsForComponent } from "../../shared/model/component-permissions";
 
 const host = (value: Partial<LocalComponentHost>) => value as LocalComponentHost;
 

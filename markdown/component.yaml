@@ -4,8 +4,8 @@ id: core/markdown
 name: Markdown
 description: Previews safe Markdown from inline content or a project file, with
   raw editing and bounded source polling.
-entry: ./index.js
-types: ./index.d.ts
+entry: ./index.tsx
+sourceRoot: ..
 propsSchema:
   type: object
   additionalProperties: false

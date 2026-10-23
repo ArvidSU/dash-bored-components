@@ -5,8 +5,8 @@ name: Status
 description: Displays a labeled state, with optional bounded sources emitting {
   state, detail?, trend?, segments? } or a supervised process snapshot.
   Source-backed states mark the last change seen while mounted.
-entry: ./index.js
-types: ./index.d.ts
+entry: ./index.tsx
+sourceRoot: ..
 propsSchema:
   type: object
   additionalProperties: false

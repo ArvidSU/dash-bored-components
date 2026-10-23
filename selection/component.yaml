@@ -4,8 +4,8 @@ id: core/selection
 name: Selection container
 description: Shows one managed child at a time using core-owned selection
   actions and persisted state.
-entry: ./index.js
-types: ./index.d.ts
+entry: ./index.tsx
+sourceRoot: ..
 renderMode: layout
 propsSchema:
   type: object

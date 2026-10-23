@@ -4,8 +4,8 @@ id: core/chart
 name: Chart
 description: "Plots line or bar data from YAML or a bounded source emitting {
   labels: string[], series: [{ label, values }] }."
-entry: ./index.js
-types: ./index.d.ts
+entry: ./index.tsx
+sourceRoot: ..
 propsSchema:
   type: object
   additionalProperties: false

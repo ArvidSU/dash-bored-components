@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { safeMarkdownUrl } from "../../src/renderer/lib/safe-url";
+import { safeMarkdownUrl } from "../../shared/lib/safe-url";
 
 describe("safeMarkdownUrl", () => {
   test("allows ordinary web, mail, relative, and fragment links", () => {

@@ -5,8 +5,8 @@ name: Focus timer
 description: A focused work session and a breathing break, with pause, resume,
   and explicit session starts. Session state resets on unmount or duration
   changes.
-entry: ./index.js
-types: ./index.d.ts
+entry: ./index.tsx
+sourceRoot: ..
 actions:
   - id: start
     label: Start or resume timer

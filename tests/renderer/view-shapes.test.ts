@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { actionVerb, isClosedState, stateTone } from "../../src/renderer/lib/state-visual";
-import { trendDirection, trendSummary } from "../../src/renderer/lib/glance-visual";
-import { diffObservedItems } from "../../src/renderer/lib/observation-changes";
-import { parseSourceChart, parseStatusValue } from "../../src/renderer/lib/view-shapes";
+import { actionVerb, isClosedState, stateTone } from "../../shared/lib/state-visual";
+import { trendDirection, trendSummary } from "../../shared/lib/glance-visual";
+import { diffObservedItems } from "../../shared/lib/observation-changes";
+import { parseSourceChart, parseStatusValue } from "../../shared/lib/view-shapes";
 
 describe("source-bound view shapes", () => {
   test("accepts status models and derives process outcomes", () => {

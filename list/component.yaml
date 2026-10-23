@@ -5,8 +5,8 @@ name: List
 description: Renders stable-ID items from a bounded source or editable YAML
   todos. Source items that are new or changed in the latest differing
   observation are marked.
-entry: ./index.js
-types: ./index.d.ts
+entry: ./index.tsx
+sourceRoot: ..
 propsSchema:
   type: object
   additionalProperties: false

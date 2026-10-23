@@ -4,8 +4,8 @@ id: core/button
 name: Action button
 description: Invokes one action or a compact bar of actions, with availability
   and invocation feedback.
-entry: ./index.js
-types: ./index.d.ts
+entry: ./index.tsx
+sourceRoot: ..
 propsSchema:
   type: object
   additionalProperties: false

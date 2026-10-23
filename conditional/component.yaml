@@ -5,8 +5,8 @@ name: Conditional visibility
 description: Recovery visibility for one tiled child based on a bounded shell
   check. Starts visible and fails open before trust or on host errors;
   unsuitable for asserting healthy status.
-entry: ./index.js
-types: ./index.d.ts
+entry: ./index.tsx
+sourceRoot: ..
 actions:
   - id: refresh
     label: Recheck condition
